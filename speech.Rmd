@@ -1,0 +1,8 @@
+---
+title: "speech"
+output: html_document
+---
+
+
+Donc bonjour à tous. Avant de commencer je tiens à remercier le jury d'avoir
+fait le déplacement pour assister

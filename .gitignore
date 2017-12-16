@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+defense.Rproj
+figure/
+data/
+libs/
+xaringan_files/
+xaringan.html
