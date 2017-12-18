@@ -32,7 +32,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       fig.height = 5, 
                       fig.width = 8, 
                       dpi = 300, 
-                      cache = FALSE)
+                      cache = TRUE)
 
 # The palette with black:
 cbbPalette <- c("#000000", 
@@ -45,13 +45,62 @@ cbbPalette <- c("#000000",
                 "#CC79A7")
 ```
 
+
 class: bottom coupure
 
 # La génétique des populations
 
+---
+## La génétique des populations
+
+.left-column[
+
+<br>
+
+<br>
+
+![](figure/cavalli_sforza.jpg)
+
+]
+
+.right-column[
+
+> « Il est bon de rappeler que ce qui nous rend semblables est plus important que ce qui nous rend différents. Les milliards d'êtres humains éparpillés sur toute la planète se différencient par la couleur de la peau et par la forme du corps, par la langue et par la culture. Et cette variété, qui témoigne de notre capacité à changer, à nous adapter à des milieux différents et à y développer des modes de vie originaux, est la meilleure garantie pour l'avenir de l'espèce humaine. Les connaissances que nous avons acquises sur nous-mêmes montrent cependant que toute cette diversité, comme la surface changeante des océans ou de la voûte du ciel, est bien peu de chose par rapport à cet immense patrimoine que nous avons en commun, nous, les humains. »
+>
+> L. Cavalli-Sforza (1994)
+
+]
+
 ???
 
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
+Anecdote par rapport aux échanges en covoiturage
+
+Phrase canon pour deux raisons :
+- apologie de la diversité
+- va nous permettre de mieux comprendre les enjeux de ce travail de thèse (hopefully)
+
+Mots importants : différencient, variété, capacité à changer, adapter à des milieux différents, garantie pour l'avenir de l'espèce
+
+Si cette citation vous semble claire, on peut quasiment passer à la partie suivante 
+
+
+--- 
+## Exemple d'adaptation génétique
+
+
+
+
+??? 
+
+Adaptation physique VS adaptation génétique
+
+
+---
+## Données génétiques
+
+<center><img src="figure/dna.gif" width="600" height="450"/></center>
+
+
 
 ---
 class: left, top
@@ -1607,6 +1656,15 @@ $$D_i^2 = (z_i - \bar{z})^T S^{-1} (z_i - \bar{z})$$
 
 où $S$ est un estimateur **robuste** de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq p}$
 
+---
+## Classique VS Robuste
+
+"Another important unsupervised task is *anomaly detection* -- for example, detecting unusual
+credit card transactions to prevent fraud, catching manufacturing defects, or automatically
+removing outliers from a dataset before feeding it to another learning algorithm. The system
+is trained with normal instances, and when it sees a new instance it can tell whether it looks
+like a normal one or whether it is likely an anomaly." (Hands-On Machine Learning with Scikit-Learn & TensorFlow)
+
 
 ---
 ## Classique VS Robuste
@@ -2002,7 +2060,7 @@ knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt")
 
 ---
 
-```{r, eval = FALSE}
+```{r}
 knitr::include_url("https://keurcien.github.io/book/details.html#rapport-entre-la-communalite-et-lindice-de-fixation", height = "600px")
 ```
 

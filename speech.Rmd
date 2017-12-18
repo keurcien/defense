@@ -5,4 +5,8 @@ output: html_document
 
 
 Donc bonjour à tous. Avant de commencer je tiens à remercier le jury d'avoir
-fait le déplacement pour assister
+fait le déplacement pour assister à cette soutenance de thèse.
+
+Plusieurs mots qui vont retenir notre attention, ACP, adaptation et populations.
+
+Luigi Luca Cavalli-Sforza parle donc
