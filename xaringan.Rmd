@@ -1087,6 +1087,10 @@ $$\tilde{G} \simeq U \Sigma V^T$$
 où $\Sigma \in M_K(\mathbb{R})$, $U \in M_{nK}(\mathbb{R})$, $V \in M_{pK}(\mathbb{R})$ avec $K < n$.  
 
 
+---
+class: bottom coupure
+
+# Adaptation locale
 
 ---
 ## Corrélation à un axe principal
