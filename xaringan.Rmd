@@ -1,7 +1,9 @@
 ---
 title: "Soutenance de thèse"
 subtitle: "Application de l’Analyse en Composantes Principales pour étudier l’adaptation biologique en génomique des populations."
-author: "Keurcien Luu"
+author: 
+- "Keurcien Luu"
+- "sous la direction de Michael Blum"
 date: "21 décembre 2017"
 output:
   xaringan::moon_reader:
@@ -32,7 +34,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       fig.height = 5, 
                       fig.width = 8, 
                       dpi = 300, 
-                      cache = TRUE)
+                      cache = FALSE)
 
 # The palette with black:
 cbbPalette <- c("#000000", 
@@ -45,12 +47,24 @@ cbbPalette <- c("#000000",
                 "#CC79A7")
 ```
 
-
-class: bottom coupure
+background-image: url("figure/oneness.jpg")
+background-size: cover
+<!-- class: bottom coupure -->
 
 # La génétique des populations
 
+<div id="rsn">
+  <p>1/45</p>
+</div>
+
+
 ---
+
+<div id="rsn">
+  <p>2/45</p>
+</div>
+
+
 ## La génétique des populations
 
 .left-column[
@@ -71,6 +85,7 @@ class: bottom coupure
 
 ]
 
+
 ???
 
 Anecdote par rapport aux échanges en covoiturage
@@ -84,28 +99,141 @@ Mots importants : différencient, variété, capacité à changer, adapter à de
 Si cette citation vous semble claire, on peut quasiment passer à la partie suivante 
 
 
---- 
-## Exemple d'adaptation génétique
+---
+background-image: url("figure/tibet.jpg")
+background-size: cover
 
+<div id="rsn">
+  <p>3/45</p>
+</div>
 
+---
+background-image: url("figure/tibet.jpg")
+background-size: cover
 
+<div id="rectangle"> 
 
-??? 
+  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
 
-Adaptation physique VS adaptation génétique
+</div>
+
+<div id="rsn">
+  <p>3/45</p>
+</div>
+
+---
+background-image: url("figure/tibet.jpg")
+background-size: cover
+
+<div id="rectangle"> 
+
+  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
+
+  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
+  
+</div>
+
+<div id="rsn">
+  <p>3/45</p>
+</div>
+
+---
+<div id="rsn">
+  <p>4/45</p>
+</div>
+
+## Problèmatiques de la thèse
+
+<br>
+
+- **Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ?** 
+
+--
+
+![](figure/tibetan_fst.png)
 
 
 ---
-## Données génétiques
+<div id="rsn">
+  <p>5/45</p>
+</div>
 
-<center><img src="figure/dna.gif" width="600" height="450"/></center>
+## Problèmatiques de la thèse
 
+<br>
+
+- **Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ?**
+
+--
+
+<br>
+
+```{r tibetan-introgression, results='asis', message=FALSE}
+Chr <- c(7, 2, 2, 5, 12, 4)
+start <- c(26800001, 46400001, 47600001, 200001, 8800001, 100400001)
+end <- c(27000000, 46600000, 47800000, 400000, 9000000, 100600000)
+D <- c(6.25, 6.15, 5.92, 4.99, 4.63, 4.58)
+Genes <- c("SKAP2", "PRKCE, EPAS1", "MIR559, MSH2, EPCAM, KCNK12", "CCDC127, PDCD6, SDHA", "MFAP5, RIMKLB, A2ML1", "TRMT10A, C4orf17, MTTP")
+data.frame(Chr = Chr,
+           start = start,
+           end = end,
+           D = D,
+           Genes = Genes) %>%
+  knitr::kable(col.names = c("Chr",
+                             "début",
+                             "fin",
+                             "\\(D^{*}\\)",
+                             "Gènes"),
+               format = "html",
+               escape = FALSE) %>%
+  row_spec(c(0, 2, 4, 6), color = "black", background = "#ffeccb") %>%
+  row_spec(c(1, 3, 5), color = "black", background = "#fffaf2")
+```
+
+---
+background-image: url("figure/tibet.jpg")
+background-size: cover
+
+<div id="rectangle"> 
+
+  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
+
+  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
+  
+</div>
+
+
+<div id="rsn">
+  <p>6/45</p>
+</div>
 
 
 ---
-class: left, top
+background-image: url("figure/tibet.jpg")
+background-size: cover
 
-## Données en grande dimension
+<div id="rectangle"> 
+
+  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
+
+  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
+  
+  <p><ul> Question n°3 : Pouvons-nous apporter des réponses aux questions précédentes qui soient adaptées aux nouveaux volumes de données ? </ul></p>
+  
+</div>
+
+
+<div id="rsn">
+  <p>6/45</p>
+</div>
+
+
+---
+<div id="rsn">
+  <p>7/45</p>
+</div>
+
+## Données génomiques
 
 #### <center> Évolution des coûts de séquençage depuis 2001 (Wetterstrand, 2013) </center>
 
@@ -134,11 +262,136 @@ df %>%
 ```
 
 
----
 
-## Qu'est-ce qu'un "SNP" ?
+---
+<div id="rsn">
+  <p>8/45</p>
+</div>
+
+## Données génomiques
+
+<center><img src="figure/dna.gif" width="600" height="450"/></center>
+
+
+---
+<div id="rsn">
+  <p>9/45</p>
+</div>
+
+## Polymorphisme d'un seul nucléotide (SNP)
 
 ```{r}
+set.seed(5)
+pair_base = function(seq) {
+  x <- vector(mode = "character", length = length(seq))
+  x[seq == "A"] <- "T"
+  x[seq == "T"] <- "A"
+  x[seq == "C"] <- "G"
+  x[seq == "G"] <- "C"
+  return(x)
+}
+
+N <- 20
+nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+nuclA2 <- pair_base(nuclA1)
+nuclB1 <- nuclA1
+# idx.SNP <- sample(1:N, size = 1)
+# if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
+#   nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
+# } else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
+#   nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
+# }
+nuclB2 <- pair_base(nuclB1)
+
+tA <- rep("DNA1", 2 * N)
+tB <- rep("DNA2", 2 * N)
+# tA[c(idx.SNP, idx.SNP + N)] <- "X"
+# tB[c(idx.SNP, idx.SNP + N)] <- "X"
+
+SNPA.df <- data.frame(x1 = rep(1:N, 2),
+                      x2 = rep(2:(N + 1), 2),
+                      y1 = c(rep(1, N), rep(3, N)),
+                      y2 = c(rep(2, N), rep(4, N)),
+                      t = tA,
+                      r = c(nuclA1, nuclA2),
+                      marker.type = "SNP")
+
+SNPB.df <- data.frame(x1 = rep(1:N, 2),
+                      x2 = rep(2:(N + 1), 2),
+                      y1 = c(rep(7, N), rep(9, N)),
+                      y2 = c(rep(8, N), rep(10, N)),
+                      t = tB,
+                      r = c(nuclB1, nuclB2),
+                      marker.type = "SNP")
+
+rbind(SNPA.df, SNPB.df) %>%
+  mutate(t = factor(t,
+                    levels = c("DNA1",
+                               "DNA2",
+                               "X"),
+                    ordered = TRUE)) %>%
+  ggplot() +
+  coord_fixed() +
+  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = t),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = r),
+            size = 4) +
+  annotate("text",
+           x = 3.25,
+           y = 8.55,
+           label = "paire de bases",
+           size = 3,
+           colour = "black") +
+  geom_segment(aes(x = 1.5, y = 8, xend = 1.5, yend = 9),
+               colour = "black",
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +
+  annotate("text",
+           x = 3.25,
+           y = 2.55,
+           label = "paire de bases",
+           size = 3,
+           colour = "black") +
+  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3),
+               colour = "black",
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.border = element_blank(),
+        panel.grid = element_blank())
+
+```
+
+
+
+---
+<div id="rsn">
+  <p>9/45</p>
+</div>
+
+## Polymorphisme d'un seul nucléotide (SNP)
+
+```{r}
+set.seed(5)
 pair_base = function(seq) {
   x <- vector(mode = "character", length = length(seq))
   x[seq == "A"] <- "T"
@@ -188,9 +441,8 @@ rbind(SNPA.df, SNPB.df) %>%
                                "X"),
                     ordered = TRUE)) %>%
   ggplot() +
-  ggtitle("Polymorphisme d'un seul nucléotide") +
   coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
+  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
   geom_rect(mapping = aes(xmin = x1,
                           xmax = x2,
                           ymin = y1,
@@ -241,383 +493,214 @@ rbind(SNPA.df, SNPB.df) %>%
 
 
 ---
+<div id="rsn">
+  <p>9/45</p>
+</div>
 
-## Modèles démographiques
+## Polymorphisme d'un seul nucléotide (SNP)
 
 ```{r}
-circleFun <- function(center = c(0, 0),
-                      diameter = 1,
-                      npoints = 100,
-                      start = 0,
-                      end = 2,
-                      filled = TRUE) {
-  tt <- seq(start * pi, end * pi, length.out = npoints)
-  df <- data.frame(
-    x = center[1] + diameter / 2 * cos(tt),
-    y = center[2] + diameter / 2 * sin(tt)
-  )
-
-  if (filled) { #add a point at the center so the whole 'pie slice' is filled
-    df <- rbind(df, center)
-  }
-
-  return(df)
+set.seed(5)
+pair_base = function(seq) {
+  x <- vector(mode = "character", length = length(seq))
+  x[seq == "A"] <- "T"
+  x[seq == "T"] <- "A"
+  x[seq == "C"] <- "G"
+  x[seq == "G"] <- "C"
+  return(x)
 }
 
-### Figure A
-triangle.x <- c(0, 1, 2)
-triangle.y <- c(0, sqrt(3), 0)
-df.triangle <- data.frame(x = triangle.x, y = triangle.y)
-df.branch <- data.frame(x1 = 0, x2 = 2, y1 = 0, y2 = 0)
+N <- 20
+nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+nuclA2 <- pair_base(nuclA1)
+nuclB1 <- nuclA1
+idx.SNP <- sample(1:N, size = 1)
+if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
+  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
+} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
+  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
+}
+nuclB2 <- pair_base(nuclB1)
 
-diam <- 0.75
-fullCircle.1 <- circleFun(c(0, 0), diam, start = 0, end = 2, filled = TRUE)
-fullCircle.2 <- circleFun(c(1, sqrt(3)), diam, start = 0, end = 2, filled = TRUE)
-fullCircle.3 <- circleFun(c(2, 0), diam, start = 0, end = 2, filled = TRUE)
+tA <- rep("DNA1", N)
+tB <- rep("DNA2", N)
+tA[idx.SNP] <- "X"
+tB[idx.SNP] <- "X"
 
-p1 <- ggplot(df.triangle, aes(x = x, y = y)) +
-  geom_line(size = 4, colour = "#E69F00") +
-  geom_segment(data = df.branch,
-               aes(x = x1, y = y1, xend = x2, yend = y2),
-               size = 4,
-               colour = "#E69F00") +
-  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.2, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  coord_equal() +
-  annotate("text",
-           x = triangle.x,
-           y = triangle.y,
-           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
-           parse = TRUE, size = 5) +
-  xlim(-1.5, 3.5) +
-  ylim(-1.5, 2.5) +
-  xlab("") +
-  ylab("") +
-  ggtitle("Modèle en îles", "") +
+SNPA.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(3, N),
+                      y2 = rep(4, N),
+                      t = tA,
+                      r = nuclA2,
+                      marker.type = "SNP")
+
+SNPB.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(9, N),
+                      y2 = rep(10, N),
+                      t = tB,
+                      r = nuclB2,
+                      marker.type = "SNP")
+
+rbind(SNPA.df, SNPB.df) %>%
+  mutate(t = factor(t,
+                    levels = c("DNA1",
+                               "DNA2",
+                               "X"),
+                    ordered = TRUE)) %>%
+  ggplot() +
+  coord_fixed() +
+  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = t),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = r),
+            size = 4) +
   theme_bw() +
-  theme(axis.text = element_blank(),
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
         axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
         plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank())
+        panel.border = element_blank(),
+        panel.grid = element_blank())
 
-### Figure B
-triangle.x <- c(0.25, 1, 2)
-triangle.y <- c(sqrt(3) / 4, sqrt(3), 0)
-df.triangle <- data.frame(x = triangle.x, y = triangle.y)
-df.branch <- data.frame(x1 = 1, x2 = 1, y1 = -1, y2 = sqrt(3))
-fullCircle.4 <- circleFun(c(0.25, sqrt(3) / 4), diam, start = 0, end = 2, filled = TRUE)
-fullCircle.5 <- circleFun(c(1, -1), diam, start = 0, end = 2, filled = TRUE)
-
-p2 <- ggplot(df.triangle, aes(x = x, y = y)) +
-  geom_line(size = 4, colour = "#E69F00") +
-  geom_segment(data = df.branch,
-               aes(x = x1, y = y1, xend = x2, yend = y2),
-               size = 4,
-               colour = "#E69F00") +
-  geom_polygon(data = fullCircle.4, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.5, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  coord_equal() +
-  annotate("text",
-           x = c(0.25, 1, 2),
-           y = c(sqrt(3) / 4, -1, 0),
-           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
-           parse = TRUE, size = 5) +
-  xlim(-1.5, 3.5) +
-  ylim(-1.5, 2.5) +
-  xlab("") +
-  ylab("") +
-  ggtitle("Modèle en étoile", "") +
-  theme_bw() +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank())
-
-### Figure C
-triangle.x <- c(0, 1, 2)
-triangle.y <- c(0, sqrt(3), 0)
-df.triangle <- data.frame(x = triangle.x, y = triangle.y)
-df.branch <- data.frame(x1 = 1, x2 = 1, y1 = sqrt(3) - 2, y2 = sqrt(3))
-fullCircle.6 <- circleFun(c(1, sqrt(3) - 2), diam, start = 0, end = 2, filled = TRUE)
-
-p3 <- ggplot(df.triangle, aes(x = x, y = y)) +
-  geom_line(size = 4, colour = "#E69F00") +
-  geom_segment(data = df.branch,
-               aes(x = x1, y = y1, xend = x2, yend = y2),
-               size = 4,
-               colour = "#E69F00") +
-  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  coord_equal() +
-  annotate("text",
-           x = c(0, 1, 2),
-           y = c(0, sqrt(3) - 2, 0),
-           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
-           parse = TRUE, size = 5) +
-  xlim(-1.5, 3.5) +
-  ylim(-1.5, 2.5) +
-  xlab("") +
-  ylab("") +
-  ggtitle("Modèle en étoile", "") +
-  theme_bw() +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank())
-
-### Figure D
-triangle.x <- c(0, 1, 2)
-triangle.y <- c(0, sqrt(3), 0)
-df.triangle <- data.frame(x = triangle.x, y = triangle.y)
-df.branch <- data.frame(x1 = 1, x2 = 1.5, y1 = 0, y2 = sqrt(3) / 2)
-fullCircle.6 <- circleFun(c(1, 0), diam, start = 0, end = 2, filled = TRUE)
-
-p4 <- ggplot(df.triangle, aes(x = x, y = y)) +
-  geom_line(size = 4, colour = "#E69F00") +
-  geom_segment(data = df.branch,
-               aes(x = x1, y = y1, xend = x2, yend = y2),
-               size = 4,
-               colour = "#E69F00") +
-  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
-  coord_equal() +
-  annotate("text",
-           x = c(0, 1, 2),
-           y = c(0, 0, 0),
-           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
-           parse = TRUE, size = 5) +
-  xlim(-1.5, 3.5) +
-  ylim(-1.5, 2.5) +
-  xlab("") +
-  ylab("") +
-  ggtitle("Modèle de divergence", "(structure hiérarchique)") +
-  theme_bw() +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
-        panel.border = element_blank())
-
-
-cowplot::plot_grid(p1, p2, p3, p4, labels = c("", "", "", ""), ncol = 2)
 ```
 
 
+
 ---
-## L'indice de fixation
+<div id="rsn">
+  <p>10/45</p>
+</div>
 
-#### Définition
+## Des chiffres et des lettres
 
-$$F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_k - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
+```{r}
+N <- 6
+SNP.lab <- c("A", "T", "A", "A", "A", "A",
+             "C", "C", "C", "A", "A", "A",
+             "G", "T", "T", "G", "G", "G",
+             "T", "T", "T", "T", "T", "C")
+SNP.x <- rep(1:6, 4)
+SNP.y <- c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6))
 
-- $\displaystyle \bar{p} = \frac{1}{N-1}\sum_{k = 1}^N p_k$
+geno.lab <- c("1", "0", "0",
+              "0", "1", "2",
+              "1", "1", "0",
+              "2", "2", "1")
+geno.x <- rep(1:3, 4)
+geno.y <- c(rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3))
+
+ind <- rep(as.character(c(1, 1, 2, 2, 3, 3)), 4)
+
+SNP.df <- data.frame(x1 = SNP.x,
+                     x2 = SNP.x + 1,
+                     y1 = SNP.y,
+                     y2 = SNP.y + 1,
+                     lab = SNP.lab,
+                     ind = ind)
+
+geno.df <- data.frame(x1 = geno.x,
+                      x2 = geno.x + 1,
+                      y1 = geno.y,
+                      y2 = geno.y + 1,
+                      lab = geno.lab,
+                      ind = rep(as.character(1:3), 4))
+
+BIM.df <- data.frame(x1 = c(1, 2, 1, 2, 1, 2, 1, 2),
+                     x2 = c(1, 2, 1, 2, 1, 2, 1, 2) + 1,
+                     y1 = c(1, 1, 2, 2, 3, 3, 4, 4),
+                     y2 = c(1, 1, 2, 2, 3, 3, 4, 4) + 1,
+                     lab = c("A", "T", "C", "A", "G", "T", "C", "T"),
+                     ind = rep(c("4", "5"), 4),
+                     data = "bim")
+
+p1 <- SNP.df %>% 
+  ggplot() +
+  coord_fixed() +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = ind),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = lab),
+            size = 5) +
+  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
+  xlab("Individus") +
+  ylab("SNPs") +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        text = element_text(size = 15))
+
+ 
+
+```
+
+
+```{r, fig.height = 2}
+print(p1)
+```
 
 --
 
-#### Test de Lewontin-Krakauer
+```{r, fig.height = 2}
+p3 <- BIM.df %>% 
+  ggplot() +
+  coord_fixed() +
+  scale_fill_manual(name = "",
+                    labels = c("Référence", "Alternatif"),
+                    values = c("#E69F00", "#009E73")) +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = ind),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = lab),
+            size = 5) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        text = element_text(size = 12))
 
-$$T_{LK} = \frac{N - 1}{\bar{F}_{ST}} F_{ST}$$
-
---
-
-**Problème : approximation $\chi^2$ non valable dans le cas de structure hiérarchique.**
-
-
-
-
----
-class: bottom coupure
-
-# L'Analyse en Composantes Principales (ACP)
-
-
-
-
-
----
-## Principe de l'ACP
-
-```{r}
-set.seed(42)
-X <- matrix(c(0.1, -0.2, -0.2, 0.1), nrow = 2)
-mvg <- MASS::mvrnorm(n = 200, c(0, 0), X %*% t(X), tol = 1e-6, empirical = FALSE, EISPACK = FALSE)
-obj.pca <- prcomp(mvg)
-ind.label <- "un individu"
-x1 <- c(1, 0)
-x2 <- c(-1, 0)
-x3 <- c(0, 1)
-x4 <- c(0, -1)
-y1 <- obj.pca$rotation %*% x1
-y2 <- obj.pca$rotation %*% x2
-y3 <- obj.pca$rotation %*% x3
-y4 <- obj.pca$rotation %*% x4
-
-pc1.1 <- data.frame(x1 = 0, x2 = y1[1], y1 = 0, y2 = y1[2])
-pc1.2 <- data.frame(x1 = 0, x2 = y2[1], y1 = 0, y2 = y2[2])
-pc2.1 <- data.frame(x1 = 0, x2 = y3[1], y1 = 0, y2 = y3[2])
-pc2.2 <- data.frame(x1 = 0, x2 = y4[1], y1 = 0, y2 = y4[2])
-
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
-```
-
-???
-
-- Réduction de la dimension
-- Nouvelle représentation des données
-
----
-## Principe de l'ACP
-
-```{r}
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  theme_bw()
-```
-
-
----
-## Principe de l'ACP
-
-```{r}
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  geom_segment(data = pc2.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
-```
-
-
----
-## Principe de l'ACP
-
-```{r}
-pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
-pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
-
-data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = obj.pca$x[59, 1], 
-                   y = obj.pca$x[59, 2] + 0.25, 
-                   xend = obj.pca$x[59, 1],  
-                   yend = obj.pca$x[59, 2] + 0.05),
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
+print(p3)
 ```
 
 
 
 ---
-## Principe de l'ACP
-
-```{r}
-pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
-pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
-
-data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = obj.pca$x[59, 1], 
-                   y = obj.pca$x[59, 2] + 0.25, 
-                   xend = obj.pca$x[59, 1],  
-                   yend = obj.pca$x[59, 2] + 0.05),
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("PC1") +
-  ylab("PC2") +
-  theme_bw()
-```
-
-
-
----
+<div id="rsn">
+  <p>10/45</p>
+</div>
 
 ## Des chiffres et des lettres 
 
@@ -717,6 +800,9 @@ print(p2)
 ```
 
 ---
+<div id="rsn">
+  <p>10/45</p>
+</div>
 
 ## Des chiffres et des lettres
 
@@ -732,10 +818,847 @@ $$G = \begin{pmatrix}
     1 & 0 & 0
 \end{pmatrix}$$
 
+
 ---
+background-image: url("figure/arabidopsis.jpg")
+background-size: cover
+<!-- class: bottom coupure -->
+
+# Adaptation locale
+
+<div id="rsn">
+  <p>11/45</p>
+</div>
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_1.png" width="450" height="300"/></center>
+
+$$p_1 = 0$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_2.png" width="450" height="300"/></center>
+
+$$p_2 = 0$$
+
+]
 
 
-## Des chiffres et des lettres
+
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_1.png" width="450" height="300"/></center>
+
+$$p_1 = 0$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_3.png" width="450" height="300"/></center>
+
+$$p_2 = 1$$
+
+]
+
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_5.png" width="450" height="300"/></center>
+
+$$p_1 = 26/45 \simeq 0.58$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_4.png" width="450" height="300"/></center>
+
+$$p_2 = 40/45 \simeq 0.89$$
+
+]
+
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+#### Définition
+
+$$F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_k - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
+
+- $\displaystyle \bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$
+
+--
+
+#### Cas $N = 2$
+
+$$F_{ST} = \frac{(p_1 - \bar{p})^2 + (p_2 - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
+
+
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_1.png" width="450" height="300"/></center>
+
+$$p_1 = 0$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_2.png" width="450" height="300"/></center>
+
+$$p_2 = 0$$
+
+]
+
+$$F_{ST} = 0$$
+
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_1.png" width="450" height="300"/></center>
+
+$$p_1 = 0$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_3.png" width="450" height="300"/></center>
+
+$$p_2 = 1$$
+
+]
+
+
+$$F_{ST} = 2$$
+
+---
+<div id="rsn">
+  <p>12/45</p>
+</div>
+
+## L'indice de fixation
+
+Allèle alternatif : C
+
+.pull-left[
+#### <center> Population 1
+<center><img src="figure/fst_5.png" width="450" height="300"/></center>
+
+$$p_1 = 26/45 \simeq 0.58$$
+
+]
+
+.pull-right[
+#### <center> Population 2
+<center><img src="figure/fst_4.png" width="450" height="300"/></center>
+
+$$p_2 = 40/45 \simeq 0.89$$
+
+]
+
+
+$$F_{ST} \simeq 0.25$$
+
+
+---
+<div id="rsn">
+  <p>13/45</p>
+</div>
+
+## Modèles démographiques
+
+```{r}
+circleFun <- function(center = c(0, 0),
+                      diameter = 1,
+                      npoints = 100,
+                      start = 0,
+                      end = 2,
+                      filled = TRUE) {
+  tt <- seq(start * pi, end * pi, length.out = npoints)
+  df <- data.frame(
+    x = center[1] + diameter / 2 * cos(tt),
+    y = center[2] + diameter / 2 * sin(tt)
+  )
+
+  if (filled) { #add a point at the center so the whole 'pie slice' is filled
+    df <- rbind(df, center)
+  }
+
+  return(df)
+}
+
+### Figure A
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 0, x2 = 2, y1 = 0, y2 = 0)
+
+diam <- 0.75
+fullCircle.1 <- circleFun(c(0, 0), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.2 <- circleFun(c(1, sqrt(3)), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.3 <- circleFun(c(2, 0), diam, start = 0, end = 2, filled = TRUE)
+
+p1 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.2, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = triangle.x,
+           y = triangle.y,
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en îles", "") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure B
+triangle.x <- c(0.25, 1, 2)
+triangle.y <- c(sqrt(3) / 4, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1, y1 = -1, y2 = sqrt(3))
+fullCircle.4 <- circleFun(c(0.25, sqrt(3) / 4), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.5 <- circleFun(c(1, -1), diam, start = 0, end = 2, filled = TRUE)
+
+p2 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.4, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.5, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0.25, 1, 2),
+           y = c(sqrt(3) / 4, -1, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en étoile", "(branches inégales)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure C
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1, y1 = sqrt(3) - 2, y2 = sqrt(3))
+fullCircle.6 <- circleFun(c(1, sqrt(3) - 2), diam, start = 0, end = 2, filled = TRUE)
+
+p3 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0, 1, 2),
+           y = c(0, sqrt(3) - 2, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en étoile", "(branches égales)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure D
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1.5, y1 = 0, y2 = sqrt(3) / 2)
+fullCircle.6 <- circleFun(c(1, 0), diam, start = 0, end = 2, filled = TRUE)
+
+p4 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0, 1, 2),
+           y = c(0, 0, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle de divergence", "(structure hiérarchique)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+
+cowplot::plot_grid(p1, p2, p3, p4, labels = c("", "", "", ""), ncol = 2)
+```
+
+
+
+---
+<div id="rsn">
+  <p>13/45</p>
+</div>
+
+## Modèles démographiques
+
+```{r}
+df.crossNWSE <- data.frame(x1 = -1.5, x2 = 3.5, y1 = 2.5, y2 = -1.5)
+df.crossSWNE <- data.frame(x1 = -1.5, x2 = 3.5, y1 = -1.5, y2 = 2.5)
+
+### Figure A
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 0, x2 = 2, y1 = 0, y2 = 0)
+
+diam <- 0.75
+fullCircle.1 <- circleFun(c(0, 0), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.2 <- circleFun(c(1, sqrt(3)), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.3 <- circleFun(c(2, 0), diam, start = 0, end = 2, filled = TRUE)
+
+p1 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.2, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = triangle.x,
+           y = triangle.y,
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en îles", "") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure B
+triangle.x <- c(0.25, 1, 2)
+triangle.y <- c(sqrt(3) / 4, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1, y1 = -1, y2 = sqrt(3))
+fullCircle.4 <- circleFun(c(0.25, sqrt(3) / 4), diam, start = 0, end = 2, filled = TRUE)
+fullCircle.5 <- circleFun(c(1, -1), diam, start = 0, end = 2, filled = TRUE)
+
+p2 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.4, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.5, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0.25, 1, 2),
+           y = c(sqrt(3) / 4, -1, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  geom_segment(data = df.crossNWSE,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "red") +
+  geom_segment(data = df.crossSWNE,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "red") +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en étoile", "(branches inégales)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure C
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1, y1 = sqrt(3) - 2, y2 = sqrt(3))
+fullCircle.6 <- circleFun(c(1, sqrt(3) - 2), diam, start = 0, end = 2, filled = TRUE)
+
+p3 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0, 1, 2),
+           y = c(0, sqrt(3) - 2, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle en étoile", "(branches égales)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+### Figure D
+triangle.x <- c(0, 1, 2)
+triangle.y <- c(0, sqrt(3), 0)
+df.triangle <- data.frame(x = triangle.x, y = triangle.y)
+df.branch <- data.frame(x1 = 1, x2 = 1.5, y1 = 0, y2 = sqrt(3) / 2)
+fullCircle.6 <- circleFun(c(1, 0), diam, start = 0, end = 2, filled = TRUE)
+
+
+p4 <- ggplot(df.triangle, aes(x = x, y = y)) +
+  geom_line(size = 4, colour = "#E69F00") +
+  geom_segment(data = df.branch,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "#E69F00") +
+  geom_polygon(data = fullCircle.1, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.6, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  geom_polygon(data = fullCircle.3, aes(x, y), color = "#56B4E9", fill = "#56B4E9") +
+  coord_equal() +
+  annotate("text",
+           x = c(0, 1, 2),
+           y = c(0, 0, 0),
+           label = c("bold(P)[1]", "bold(P)[2]", "bold(P)[3]"),
+           parse = TRUE, size = 5) +
+  geom_segment(data = df.crossNWSE,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "red") +
+  geom_segment(data = df.crossSWNE,
+               aes(x = x1, y = y1, xend = x2, yend = y2),
+               size = 4,
+               colour = "red") +
+  xlim(-1.5, 3.5) +
+  ylim(-1.5, 2.5) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Modèle de divergence", "(structure hiérarchique)") +
+  theme_bw() +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank())
+
+
+cowplot::plot_grid(p1, p2, p3, p4, labels = c("", "", "", ""), ncol = 2)
+```
+
+
+
+
+
+
+---
+background-image: url("figure/pca_ex.png")
+background-size: cover
+<!-- class: bottom coupure -->
+
+<h1 style="text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;"> L'Analyse en Composantes Principales (ACP)</h1>
+
+<div id="rsn">
+  <p>14/45</p>
+</div>
+
+
+
+
+---
+<div id="rsn">
+  <p>15/45</p>
+</div>
+
+## Principe de l'ACP
+
+```{r}
+set.seed(42)
+X <- matrix(c(0.1, -0.2, -0.2, 0.1), nrow = 2)
+mvg <- MASS::mvrnorm(n = 200, c(0, 0), X %*% t(X), tol = 1e-6, empirical = FALSE, EISPACK = FALSE)
+obj.pca <- prcomp(mvg)
+ind.label <- "un individu"
+x1 <- c(1, 0)
+x2 <- c(-1, 0)
+x3 <- c(0, 1)
+x4 <- c(0, -1)
+y1 <- obj.pca$rotation %*% x1
+y2 <- obj.pca$rotation %*% x2
+y3 <- obj.pca$rotation %*% x3
+y4 <- obj.pca$rotation %*% x4
+
+pc1.1 <- data.frame(x1 = 0, x2 = y1[1], y1 = 0, y2 = y1[2])
+pc1.2 <- data.frame(x1 = 0, x2 = y2[1], y1 = 0, y2 = y2[2])
+pc2.1 <- data.frame(x1 = 0, x2 = y3[1], y1 = 0, y2 = y3[2])
+pc2.2 <- data.frame(x1 = 0, x2 = y4[1], y1 = 0, y2 = y4[2])
+
+data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
+  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
+  ggplot(aes(x, y)) +
+  geom_point(color = "steelblue") + 
+  coord_equal() +
+  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
+  geom_segment(aes(x = x[59], 
+                   y = y[59] + 0.25, 
+                   xend = x[59], 
+                   yend = y[59] + 0.05), 
+               colour = "black", 
+               size = 0.5,
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  xlab("Variable 1") +
+  ylab("Variable 2") +
+  theme_bw()
+```
+
+???
+
+- Réduction de la dimension
+- Nouvelle représentation des données
+
+---
+<div id="rsn">
+  <p>15/45</p>
+</div>
+
+## Principe de l'ACP
+
+```{r}
+data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
+  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
+  ggplot(aes(x, y)) +
+  geom_point(color = "steelblue") + 
+  coord_equal() +
+  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
+  geom_segment(aes(x = x[59], 
+                   y = y[59] + 0.25, 
+                   xend = x[59], 
+                   yend = y[59] + 0.05), 
+               colour = "black", 
+               size = 0.5,
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
+  xlab("Variable 1") +
+  ylab("Variable 2") +
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  theme_bw()
+```
+
+
+---
+<div id="rsn">
+  <p>15/45</p>
+</div>
+
+## Principe de l'ACP
+
+```{r}
+data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
+  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
+  ggplot(aes(x, y)) +
+  geom_point(color = "steelblue") + 
+  coord_equal() +
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  geom_segment(data = pc2.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
+  geom_segment(data = pc2.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
+  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
+  geom_segment(aes(x = x[59], 
+                   y = y[59] + 0.25, 
+                   xend = x[59], 
+                   yend = y[59] + 0.05), 
+               colour = "black", 
+               size = 0.5,
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
+  xlab("Variable 1") +
+  ylab("Variable 2") +
+  theme_bw()
+```
+
+
+---
+<div id="rsn">
+  <p>15/45</p>
+</div>
+
+## Principe de l'ACP
+
+```{r}
+pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
+pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
+
+data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
+  ggplot(aes(x, y)) +
+  geom_point(color = "steelblue") + 
+  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
+  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
+  geom_segment(aes(x = obj.pca$x[59, 1], 
+                   y = obj.pca$x[59, 2] + 0.25, 
+                   xend = obj.pca$x[59, 1],  
+                   yend = obj.pca$x[59, 2] + 0.05),
+               colour = "black", 
+               size = 0.5,
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
+  coord_equal() +
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  xlab("Variable 1") +
+  ylab("Variable 2") +
+  theme_bw()
+```
+
+
+
+---
+<div id="rsn">
+  <p>15/45</p>
+</div>
+
+## Principe de l'ACP
+
+```{r}
+pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
+pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
+
+data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
+  ggplot(aes(x, y)) +
+  geom_point(color = "steelblue") + 
+  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
+  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
+  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
+  geom_segment(aes(x = obj.pca$x[59, 1], 
+                   y = obj.pca$x[59, 2] + 0.25, 
+                   xend = obj.pca$x[59, 1],  
+                   yend = obj.pca$x[59, 2] + 0.05),
+               colour = "black", 
+               size = 0.5,
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
+  coord_equal() +
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  xlab("PC1") +
+  ylab("PC2") +
+  theme_bw()
+```
+
+
+
+---
+<div id="rsn">
+  <p>16/45</p>
+</div>
+
+
+## Normalisation
+
+
+```{r, include = FALSE}
+N <- 6
+SNP.lab <- c("A", "T", "A", "A", "A", "A",
+             "C", "C", "C", "A", "A", "A",
+             "G", "T", "T", "G", "G", "G",
+             "T", "T", "T", "T", "T", "C")
+SNP.x <- rep(1:6, 4)
+SNP.y <- c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6))
+
+geno.lab <- c("1", "0", "0",
+              "0", "1", "2",
+              "1", "1", "0",
+              "2", "2", "1")
+geno.x <- rep(1:3, 4)
+geno.y <- c(rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3))
+
+ind <- rep(as.character(c(1, 1, 2, 2, 3, 3)), 4)
+
+SNP.df <- data.frame(x1 = SNP.x,
+                     x2 = SNP.x + 1,
+                     y1 = SNP.y,
+                     y2 = SNP.y + 1,
+                     lab = SNP.lab,
+                     ind = ind)
+
+geno.df <- data.frame(x1 = geno.x,
+                      x2 = geno.x + 1,
+                      y1 = geno.y,
+                      y2 = geno.y + 1,
+                      lab = geno.lab,
+                      ind = rep(as.character(1:3), 4))
+
+p1 <- SNP.df %>% 
+  ggplot() +
+  coord_fixed() +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = ind),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = lab),
+            size = 5) +
+  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
+  xlab("Individus") +
+  ylab("SNPs") +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        text = element_text(size = 15))
+
+```
 
 
 ```{r, fig.height=2}
@@ -758,8 +1681,11 @@ $$\begin{pmatrix}
 
 ]
 ---
+<div id="rsn">
+  <p>16/45</p>
+</div>
 
-## Des chiffres et des lettres
+## Normalisation
 
 
 ```{r, fig.height=2}
@@ -784,8 +1710,13 @@ $$\tilde{G} = \begin{pmatrix}
 
 
 ---
+<div id="rsn">
+  <p>17/45</p>
+</div>
 
 ## Qui se ressemblent...
+
+<br>
 
 .pull-left[
   ![](figure/tmp_img.jpg)
@@ -810,6 +1741,10 @@ $$\tilde{G} = \begin{pmatrix}
 Visualisation de la matrice d'apparentement
 
 ---
+<div id="rsn">
+  <p>18/45</p>
+</div>
+
 
 ## ...se retrouvent ensemble 
 
@@ -851,6 +1786,10 @@ corrplot::corrplot(GRM, method = "color", tl.pos = "n")
 
 
 ---
+<div id="rsn">
+  <p>18/45</p>
+</div>
+
 
 ## ...se retrouvent ensemble 
 
@@ -897,6 +1836,9 @@ corrplot::corrplot(GRM, method = "color", tl.pos = "n")
 Les clusters correspondent bien aux populations
 
 ---
+<div id="rsn">
+  <p>18/45</p>
+</div>
 
 ## ...se retrouvent ensemble
 
@@ -935,10 +1877,11 @@ corrplot::corrplot(GRM, method = "color", tl.pos = "n")
 ]
 
 
-
-
-
 ---
+<div id="rsn">
+  <p>19/45</p>
+</div>
+
 ## HapMap
 
 ```{r}
@@ -975,6 +1918,10 @@ ggplot(ggdf, aes(x = PC1, y = PC2, fill = superpop)) +
 
 
 ---
+<div id="rsn">
+  <p>20/45</p>
+</div>
+
 <br>
 
 <br>
@@ -1001,6 +1948,10 @@ des clusters de façon non supervisée.
 
 
 ---
+<div id="rsn">
+  <p>21/45</p>
+</div>
+
 ## Réaliser une ACP en génétique des populations
 
 - Normalisation de la matrice de génotypes
@@ -1029,6 +1980,10 @@ où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.
 
 
 ---
+<div id="rsn">
+  <p>21/45</p>
+</div>
+
 ## Réaliser une ACP en génétique des populations
 
 - Normalisation de la matrice de génotypes
@@ -1060,6 +2015,10 @@ où $\Sigma \in M_K(\mathbb{R})$ et $U \in M_{nK}(\mathbb{R})$, avec $K < n$.
 - Explication du choix de $K$ ultérieur.
 
 ---
+<div id="rsn">
+  <p>21/45</p>
+</div>
+
 ## Réaliser une ACP en génétique des populations
 
 - Normalisation de la matrice de génotypes
@@ -1088,11 +2047,21 @@ où $\Sigma \in M_K(\mathbb{R})$, $U \in M_{nK}(\mathbb{R})$, $V \in M_{pK}(\mat
 
 
 ---
-class: bottom coupure
+class: bottom, coupure
 
-# Adaptation locale
+![](figure/ndf.png)
+
+# Une première statistique de test
+
+<div id="rsn">
+  <p>29/45</p>
+</div>
 
 ---
+<div id="rsn">
+  <p>22/45</p>
+</div>
+
 ## Corrélation à un axe principal
 
 .pull-left[
@@ -1132,6 +2101,10 @@ $$\Sigma^2 = \begin{pmatrix}
 
 
 ---
+<div id="rsn">
+  <p>22/45</p>
+</div>
+
 ## Corrélation à un axe principal
 
 .pull-left[
@@ -1167,6 +2140,10 @@ $$\Sigma^2 = \begin{pmatrix}
 
 
 ---
+<div id="rsn">
+  <p>23/45</p>
+</div>
+
 ## Communalité
 
 .pull-left[
@@ -1201,6 +2178,10 @@ $$\Sigma^2 = \begin{pmatrix}
 
 
 ---
+<div id="rsn">
+  <p>23/45</p>
+</div>
+
 ## Communalité
 
 .pull-left[
@@ -1235,6 +2216,10 @@ $$\Sigma^2 = \begin{pmatrix}
 
 
 ---
+<div id="rsn">
+  <p>24/45</p>
+</div>
+
 ## Lien avec l'indice de fixation
 
 ```{r, include = FALSE}
@@ -1295,6 +2280,10 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
 
 
 ---
+<div id="rsn">
+  <p>24/45</p>
+</div>
+
 ## Lien avec l'indice de fixation
 
 .pull-left[
@@ -1339,6 +2328,10 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
 \end{align}
 
 ---
+<div id="rsn">
+  <p>24/45</p>
+</div>
+
 ## Lien avec l'indice de fixation
 
 .pull-left[
@@ -1384,6 +2377,10 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
 
 
 ---
+<div id="rsn">
+  <p>25/45</p>
+</div>
+
 ## Lien avec l'indice de fixation
 
 .pull-left[
@@ -1401,7 +2398,7 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
 
 #### Communalité
 
-- $h_i^2 = ||\tilde{G}_{.,i}^T U||_2^2$
+- $h_i^2 \simeq ||\tilde{G}_{.,i}^T U||_2^2$
 
 - Scores continus
 
@@ -1414,6 +2411,10 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
 Généralisation de l'indice de fixation au cas de populations continues.
 
 ---
+<div id="rsn">
+  <p>26/45</p>
+</div>
+
 ## POPRES
 
 ```{r}
@@ -1425,13 +2426,12 @@ ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) +
   geom_point(size = 2.5, shape = 21, stroke = 1) +
   scale_fill_manual(labels = sort(unique(ggdf$pop)),
                     values = as.character(obj.popres$palette.fr)) +
-  guides(fill = guide_legend(nrow = 5)) +
+  guides(fill = guide_legend(nrow = 8)) +
   theme_bw() +
   theme(axis.text = element_text(face = "bold"),
-        text = element_text(size = 15),
-        legend.text = element_text(size = 12.5),
-        legend.key.height = unit(0.75, "line"),
-        legend.key.width = unit(0.5, "line"),
+        legend.text = element_text(size = 15),
+        legend.key.height = unit(1, "line"),
+        legend.key.width = unit(2.5, "cm"),
         legend.title = element_blank(),
         legend.direction = "horizontal",
         legend.position = "bottom")
@@ -1445,6 +2445,10 @@ Reflète la structure géographique
 
 
 ---
+<div id="rsn">
+  <p>27/45</p>
+</div>
+
 ## POPRES
 
 ```{r}
@@ -1489,6 +2493,10 @@ Décrire LCT, HLA, HERC2
 
 
 ---
+<div id="rsn">
+  <p>28/45</p>
+</div>
+
 ## Limites
 
 - Nombre de SNPs : 4542
@@ -1552,6 +2560,10 @@ df %>%
 
 
 ---
+<div id="rsn">
+  <p>28/45</p>
+</div>
+
 ## Limites
 
 - Nombre de SNPs : 4542
@@ -1608,8 +2620,13 @@ df %>%
 ---
 class: bottom, coupure
 
+![](figure/molecol.png)
+
 # Une nouvelle statistique de test
 
+<div id="rsn">
+  <p>29/45</p>
+</div>
 
 
 ---
@@ -1640,6 +2657,10 @@ $$D_i^2 = (z_i - \bar{z})^T S^{-1} (z_i - \bar{z})$$
 où $S$ est un estimateur de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq p}$
 
 ---
+<div id="rsn">
+  <p>30/45</p>
+</div>
+
 ## Méthode
 
 - Décomposition en valeurs singulières 
@@ -1661,16 +2682,29 @@ $$D_i^2 = (z_i - \bar{z})^T S^{-1} (z_i - \bar{z})$$
 où $S$ est un estimateur **robuste** de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq p}$
 
 ---
+<div id="rsn">
+  <p>31/45</p>
+</div>
+
+
 ## Classique VS Robuste
 
-"Another important unsupervised task is *anomaly detection* -- for example, detecting unusual
+<br>
+
+> « Another important unsupervised task is *anomaly detection* - for example, detecting unusual
 credit card transactions to prevent fraud, catching manufacturing defects, or automatically
 removing outliers from a dataset before feeding it to another learning algorithm. The system
 is trained with normal instances, and when it sees a new instance it can tell whether it looks
-like a normal one or whether it is likely an anomaly." (Hands-On Machine Learning with Scikit-Learn & TensorFlow)
+like a normal one or whether it is likely an anomaly. »
+>
+> Hands-On Machine Learning with Scikit-Learn & TensorFlow
 
 
 ---
+<div id="rsn">
+  <p>31/45</p>
+</div>
+
 ## Classique VS Robuste
 
 ```{r, include = FALSE}
@@ -1782,6 +2816,10 @@ ggplot(aes(x = x.coord, y = y.coord)) +
 ```
 
 ---
+<div id="rsn">
+  <p>32/45</p>
+</div>
+
 ## Communalité VS Mahalanobis
 
 - Nombre de SNPs : 4542
@@ -1809,6 +2847,7 @@ df %>%
   geom_point() + 
   scale_color_manual(values = c("#2e7b77", "red")) +
   scale_size_manual(values = c(2, 5)) +
+  xlab("SNP") +
   ylab("Communalité") +
   theme_bw() +
   theme(axis.text = element_text(face = "bold"),
@@ -1829,6 +2868,7 @@ df %>%
   geom_point() + 
   scale_color_manual(values = c("#2e7b77", "red")) +
   scale_size_manual(values = c(2, 5)) +
+  xlab("SNP") +
   ylab("Dist. rob. de Mahalanobis") +
   theme_bw() +
   theme(axis.text = element_text(face = "bold"),
@@ -1838,6 +2878,10 @@ df %>%
 ]
 
 ---
+<div id="rsn">
+  <p>33/45</p>
+</div>
+
 ## `pcadapt` VS `pcadapt`
 
 ```{r}
@@ -1871,6 +2915,10 @@ highcharter::hchart(hc.df,
 
 
 ---
+<div id="rsn">
+  <p>34/45</p>
+</div>
+
 ## `pcadapt` & Cie
 
 .pull-left[
@@ -1935,18 +2983,22 @@ highcharter::hchart(hc.df,
 
 
 ---
+<div id="rsn">
+  <p>34/45</p>
+</div>
+
 ## `pcadapt` & Cie
 
 .pull-left[
 ```{r}
 df <- readRDS("data/curves-fdrpower.rds") %>%
   mutate(Puissance = power, Logiciel = software, FDR = fdr) %>%
-  filter(model %in% c("isl", "islh")) %>%
+  filter(model %in% c("isl", "islh"), software != "SNMF") %>%
   droplevels()
 levels(df$model) <- c("Sans métissage", "Avec métissage")
 
 thm <- hc_theme(
-  colors = cbbPalette[c(7, 2, 4, 3, 8)],
+  colors = cbbPalette[c(7, 2, 4, 3)],
   chart = list(
     backgroundColor = NULL
     )
@@ -1972,18 +3024,61 @@ df %>%
 ```
 ]
 
+???
+
+Parler de la ressemblance entre FLK et pcadapt
+
 
 ---
-class: bottom coupure
+## Temps de calcul
 
-# Introgression adaptative
+```{r}
+df.runtime <- readRDS("data/runtime-molecol.rds") %>%
+  filter(Software != "SNMF") %>%
+  mutate(Temps = log10(Runtime + 1), Logiciel = Software) %>%
+  ggplot(aes(x = nSNP,
+             y = Runtime,
+             colour = Logiciel)) +
+  scale_y_continuous(breaks = 0:3, labels = c(0, 10, 100, 1000)) +
+  scale_color_manual(values = cbbPalette[c(2, 4, 3, 8)]) +
+  guides(colour = guide_legend(nrow = 1)) +
+  geom_point(size = 5) +
+  geom_line(size = 2) +
+  ylab("Temps (secondes)") +
+  xlab("Nombre de SNPs") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.title.align = 0.5,
+        legend.text = element_text(face = "italic"),
+        legend.key.width = unit(5, "line"))
+
+# thm <- hc_theme(
+#   colors = cbbPalette[c(2, 4, 3)],
+#   chart = list(
+#     backgroundColor = NULL
+#     )
+# )
+
+
+# df.runtime %>% 
+#   hchart("line", hcaes(x = nSNP, y = Temps, group = Logiciel)) %>%
+#   hc_add_theme(thm) %>%
+#   hc_title(text = "Comparaison des temps de calcul")
+```
 
 
 
 ---
 background-image: url("figure/mort_aux_rats.jpg")
 background-size: cover
+<!-- class: bottom coupure -->
 
+# Introgression adaptative
+
+<div id="rsn">
+  <p>35/45</p>
+</div>
 
 
 ---
@@ -2010,9 +3105,9 @@ data.frame(method = method,
   knitr::kable(format = 'html', 
                col.names = c("Méthode",
                              "Référence"),
-                escape = FALSE) # %>%
-  # row_spec(c(0, 2, 4), color = "black", background = "#ffeccb") %>%
-  # row_spec(c(1, 3), color = "black", background = "#fffaf2")
+                escape = FALSE) %>%
+  row_spec(c(0, 2, 4), color = "black", background = "#ffeccb") %>%
+  row_spec(c(1, 3), color = "black", background = "#fffaf2")
 ```
 ]
 
@@ -2035,15 +3130,85 @@ data.frame(method = method,
            ref = ref) %>%
   knitr::kable(format = 'html',
                col.names = c("Méthode",
-                             "Référence")) # %>%
-  # kableExtra::row_spec(c(0, 2, 4), color = "black", background = "#ffeccb") %>%
-  # kableExtra::row_spec(c(1, 3), color = "black", background = "#fffaf2")
+                             "Référence")) %>%
+  kableExtra::row_spec(c(0, 2, 4), color = "black", background = "#ffeccb") %>%
+  kableExtra::row_spec(c(1, 3), color = "black", background = "#fffaf2")
 ```
 ]
 
 
 ---
-## Coefficients de métissage
+## Coefficients de métissage et ACP
+
+<center><img src="figure/mcvean.png" width="340" height="450"/></center>
+
+
+---
+## Scores locaux
+
+<center><img src="figure/pca.png" width="540" height="450"/></center>
+
+---
+## Méthode
+
+
+- Décomposition en valeurs singulières de $\tilde{G}$
+
+
+$$\tilde{G} \simeq U \Sigma V^T$$
+
+- $B$ barycentre des individus d'une population receveuse
+
+- $B_1$ et $B_2$ barycentres des individus des populations donneuses
+
+--
+
+- Calcul des coordonnées barycentriques de $B$ dans le repère $(B_1, B_2)$
+
+$$B = q_1 B_1 + q_2 B_2$$
+--
+
+- Calcul des scores locaux sur une fenêtre de SNPs $W$ 
+
+$$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
+
+--
+
+- Calcul des proportions de métissage local pour chaque SNP à partir de $U_W$
+
+
+---
+## Analyse de *Populus*
+
+#### <center> Chromosome 6 
+
+![](figure/Chr06_100kbp.png)
+
+
+---
+## Analyse de *Populus*
+
+#### <center> Chromosome 12
+
+![](figure/Chr12_100kbp.png)
+
+
+---
+## Simulations
+
+#### <center> Métissage
+
+![](figure/power_Dq.png)
+
+
+---
+## Simulations
+
+#### <center> Introgression
+
+![](figure/power_f_introgression.png)
+
+
 
 
 
@@ -2057,7 +3222,7 @@ class: bottom coupure
 ## Interface Shiny
 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt")
 ```
 
