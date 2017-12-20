@@ -2567,3 +2567,35 @@ knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt", height = 500)
 knitr::include_url("https://keurcien.github.io/book/details.html#rapport-entre-la-communalite-et-lindice-de-fixation", height = "600px")
 ```
 
+
+---
+background-image: url("figure/perspective.jpg")
+background-size: cover
+class: coupure bottom
+
+### Perspectives et conclusions
+
+<div id="rsn">
+  <p>42/45</p>
+</div>
+
+---
+<div id="rsn">
+  <p>43/45</p>
+</div>
+
+### Déséquilibre de liaison pour améliorer l'inférence de la structure
+
+#### <center> (Lawson & Falush, 2012)
+
+![](figure/finestructure.png)
+
+---
+<div id="rsn">
+  <p>44/45</p>
+</div>
+
+
+### Utilisation de variables environnementales
+
+![](figure/rda-pca-1.png)
