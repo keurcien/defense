@@ -1,0 +1,15 @@
+base
+ggplot2
+dplyr
+cowplot
+plotly
+kableExtra
+pcadapt
+corrplot
+emojifont
+qvalue
+OutFLANK
+highcharter
+fit.models
+robust
+bindrcpp

@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       fig.height = 5, 
                       fig.width = 8, 
                       dpi = 300, 
-                      cache = FALSE)
+                      cache = TRUE)
 
 # The palette with black:
 cbbPalette <- c("#000000", 
@@ -49,14 +49,13 @@ cbbPalette <- c("#000000",
 
 background-image: url("figure/oneness.jpg")
 background-size: cover
-<!-- class: bottom coupure -->
+class: coupure bottom
 
 # La génétique des populations
 
 <div id="rsn">
   <p>1/45</p>
 </div>
-
 
 ---
 
@@ -65,7 +64,7 @@ background-size: cover
 </div>
 
 
-## La génétique des populations
+### La génétique des populations
 
 .left-column[
 
@@ -113,13 +112,14 @@ background-size: cover
 
 <div id="rectangle"> 
 
-  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
-
+  <p><ul> Peut-on déterminer si des gènes ont permis à des individus de vivre dans des conditions environnementales spécifiques ? </ul></p>
+  
 </div>
 
 <div id="rsn">
   <p>3/45</p>
 </div>
+
 
 ---
 background-image: url("figure/tibet.jpg")
@@ -127,10 +127,10 @@ background-size: cover
 
 <div id="rectangle"> 
 
-  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
-
-  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
+  <p><ul> Peut-on déterminer si des gènes ont permis à des individus de vivre dans des conditions environnementales spécifiques ? </ul></p>
   
+  <center><img src="figure/tibetan_fst.png"/></center>
+  <center><p> (Xu et al., 2010) </p></center>
 </div>
 
 <div id="rsn">
@@ -142,101 +142,9 @@ background-size: cover
   <p>4/45</p>
 </div>
 
-## Problèmatiques de la thèse
-
-<br>
-
-- **Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ?** 
-
---
-
-![](figure/tibetan_fst.png)
-
-
----
-<div id="rsn">
-  <p>5/45</p>
-</div>
-
-## Problèmatiques de la thèse
-
-<br>
-
-- **Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ?**
-
---
-
-<br>
-
-```{r tibetan-introgression, results='asis', message=FALSE}
-Chr <- c(7, 2, 2, 5, 12, 4)
-start <- c(26800001, 46400001, 47600001, 200001, 8800001, 100400001)
-end <- c(27000000, 46600000, 47800000, 400000, 9000000, 100600000)
-D <- c(6.25, 6.15, 5.92, 4.99, 4.63, 4.58)
-Genes <- c("SKAP2", "PRKCE, EPAS1", "MIR559, MSH2, EPCAM, KCNK12", "CCDC127, PDCD6, SDHA", "MFAP5, RIMKLB, A2ML1", "TRMT10A, C4orf17, MTTP")
-data.frame(Chr = Chr,
-           start = start,
-           end = end,
-           D = D,
-           Genes = Genes) %>%
-  knitr::kable(col.names = c("Chr",
-                             "début",
-                             "fin",
-                             "\\(D^{*}\\)",
-                             "Gènes"),
-               format = "html",
-               escape = FALSE) %>%
-  row_spec(c(0, 2, 4, 6), color = "black", background = "#ffeccb") %>%
-  row_spec(c(1, 3, 5), color = "black", background = "#fffaf2")
-```
-
----
-background-image: url("figure/tibet.jpg")
-background-size: cover
-
-<div id="rectangle"> 
-
-  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
-
-  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
-  
-</div>
-
-
-<div id="rsn">
-  <p>6/45</p>
-</div>
-
-
----
-background-image: url("figure/tibet.jpg")
-background-size: cover
-
-<div id="rectangle"> 
-
-  <p><ul> Question n°1 : Quels gènes permettent aux Tibétains de vivre dans ces conditions environnementales difficiles ? </ul></p>
-
-  <p><ul> Question n°2 : Sommes-nous capables d'identifier la provenance de ces gènes ? </ul></p>
-  
-  <p><ul> Question n°3 : Pouvons-nous apporter des réponses aux questions précédentes qui soient adaptées aux nouveaux volumes de données ? </ul></p>
-  
-</div>
-
-
-<div id="rsn">
-  <p>6/45</p>
-</div>
-
-
----
-<div id="rsn">
-  <p>7/45</p>
-</div>
-
-## Données génomiques
+### Données génomiques
 
 #### <center> Évolution des coûts de séquençage depuis 2001 (Wetterstrand, 2013) </center>
-
 
 ```{r}
 df <- read.csv("data/seqcost2015_4.csv")
@@ -261,297 +169,70 @@ df %>%
 
 ```
 
-
-
 ---
 <div id="rsn">
-  <p>8/45</p>
+  <p>5/45</p>
 </div>
 
-## Données génomiques
+### Polymorphisme d'un seul nucléotide (SNP)
 
-<center><img src="figure/dna.gif" width="600" height="450"/></center>
-
-
----
-<div id="rsn">
-  <p>9/45</p>
-</div>
-
-## Polymorphisme d'un seul nucléotide (SNP)
 
 ```{r}
 set.seed(5)
-pair_base = function(seq) {
-  x <- vector(mode = "character", length = length(seq))
-  x[seq == "A"] <- "T"
-  x[seq == "T"] <- "A"
-  x[seq == "C"] <- "G"
-  x[seq == "G"] <- "C"
-  return(x)
-}
 
 N <- 20
 nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
-nuclA2 <- pair_base(nuclA1)
 nuclB1 <- nuclA1
-# idx.SNP <- sample(1:N, size = 1)
-# if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
-#   nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
-# } else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
-#   nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
-# }
-nuclB2 <- pair_base(nuclB1)
-
-tA <- rep("DNA1", 2 * N)
-tB <- rep("DNA2", 2 * N)
-# tA[c(idx.SNP, idx.SNP + N)] <- "X"
-# tB[c(idx.SNP, idx.SNP + N)] <- "X"
-
-SNPA.df <- data.frame(x1 = rep(1:N, 2),
-                      x2 = rep(2:(N + 1), 2),
-                      y1 = c(rep(1, N), rep(3, N)),
-                      y2 = c(rep(2, N), rep(4, N)),
-                      t = tA,
-                      r = c(nuclA1, nuclA2),
-                      marker.type = "SNP")
-
-SNPB.df <- data.frame(x1 = rep(1:N, 2),
-                      x2 = rep(2:(N + 1), 2),
-                      y1 = c(rep(7, N), rep(9, N)),
-                      y2 = c(rep(8, N), rep(10, N)),
-                      t = tB,
-                      r = c(nuclB1, nuclB2),
-                      marker.type = "SNP")
-
-rbind(SNPA.df, SNPB.df) %>%
-  mutate(t = factor(t,
-                    levels = c("DNA1",
-                               "DNA2",
-                               "X"),
-                    ordered = TRUE)) %>%
-  ggplot() +
-  coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = t),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = r),
-            size = 4) +
-  annotate("text",
-           x = 3.25,
-           y = 8.55,
-           label = "paire de bases",
-           size = 3,
-           colour = "black") +
-  geom_segment(aes(x = 1.5, y = 8, xend = 1.5, yend = 9),
-               colour = "black",
-               size = 0.3,
-               arrow = arrow(length = unit(4, "pt"),
-                             type = "closed",
-                             ends = "both")) +
-  annotate("text",
-           x = 3.25,
-           y = 2.55,
-           label = "paire de bases",
-           size = 3,
-           colour = "black") +
-  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3),
-               colour = "black",
-               size = 0.3,
-               arrow = arrow(length = unit(4, "pt"),
-                             type = "closed",
-                             ends = "both")) +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank())
-
-```
-
-
-
----
-<div id="rsn">
-  <p>9/45</p>
-</div>
-
-## Polymorphisme d'un seul nucléotide (SNP)
-
-```{r}
-set.seed(5)
-pair_base = function(seq) {
-  x <- vector(mode = "character", length = length(seq))
-  x[seq == "A"] <- "T"
-  x[seq == "T"] <- "A"
-  x[seq == "C"] <- "G"
-  x[seq == "G"] <- "C"
-  return(x)
-}
-
-N <- 20
-nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
-nuclA2 <- pair_base(nuclA1)
-nuclB1 <- nuclA1
-idx.SNP <- sample(1:N, size = 1)
-if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
-  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
-} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
-  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
-}
-nuclB2 <- pair_base(nuclB1)
-
-tA <- rep("DNA1", 2 * N)
-tB <- rep("DNA2", 2 * N)
-tA[c(idx.SNP, idx.SNP + N)] <- "X"
-tB[c(idx.SNP, idx.SNP + N)] <- "X"
-
-SNPA.df <- data.frame(x1 = rep(1:N, 2),
-                      x2 = rep(2:(N + 1), 2),
-                      y1 = c(rep(1, N), rep(3, N)),
-                      y2 = c(rep(2, N), rep(4, N)),
-                      t = tA,
-                      r = c(nuclA1, nuclA2),
-                      marker.type = "SNP")
-
-SNPB.df <- data.frame(x1 = rep(1:N, 2),
-                      x2 = rep(2:(N + 1), 2),
-                      y1 = c(rep(7, N), rep(9, N)),
-                      y2 = c(rep(8, N), rep(10, N)),
-                      t = tB,
-                      r = c(nuclB1, nuclB2),
-                      marker.type = "SNP")
-
-rbind(SNPA.df, SNPB.df) %>%
-  mutate(t = factor(t,
-                    levels = c("DNA1",
-                               "DNA2",
-                               "X"),
-                    ordered = TRUE)) %>%
-  ggplot() +
-  coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = t),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = r),
-            size = 4) +
-  annotate("text",
-           x = 3.25,
-           y = 8.55,
-           label = "paire de bases",
-           size = 3,
-           colour = "black") +
-  geom_segment(aes(x = 1.5, y = 8, xend = 1.5, yend = 9),
-               colour = "black",
-               size = 0.3,
-               arrow = arrow(length = unit(4, "pt"),
-                             type = "closed",
-                             ends = "both")) +
-  annotate("text",
-           x = 3.25,
-           y = 2.55,
-           label = "paire de bases",
-           size = 3,
-           colour = "black") +
-  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3),
-               colour = "black",
-               size = 0.3,
-               arrow = arrow(length = unit(4, "pt"),
-                             type = "closed",
-                             ends = "both")) +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank())
-
-```
-
-
----
-<div id="rsn">
-  <p>9/45</p>
-</div>
-
-## Polymorphisme d'un seul nucléotide (SNP)
-
-```{r}
-set.seed(5)
-pair_base = function(seq) {
-  x <- vector(mode = "character", length = length(seq))
-  x[seq == "A"] <- "T"
-  x[seq == "T"] <- "A"
-  x[seq == "C"] <- "G"
-  x[seq == "G"] <- "C"
-  return(x)
-}
-
-N <- 20
-nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
-nuclA2 <- pair_base(nuclA1)
-nuclB1 <- nuclA1
-idx.SNP <- sample(1:N, size = 1)
-if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
-  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
-} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
-  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
-}
-nuclB2 <- pair_base(nuclB1)
+nuclC1 <- nuclA1
+nuclD1 <- nuclA1
 
 tA <- rep("DNA1", N)
 tB <- rep("DNA2", N)
-tA[idx.SNP] <- "X"
-tB[idx.SNP] <- "X"
+tC <- rep("DNA3", N)
+tD <- rep("DNA4", N)
 
 SNPA.df <- data.frame(x1 = 1:N,
                       x2 = 2:(N + 1),
-                      y1 = rep(3, N),
-                      y2 = rep(4, N),
+                      y1 = rep(1, N), 
+                      y2 = rep(2, N), 
                       t = tA,
-                      r = nuclA2,
+                      r = nuclA1,
                       marker.type = "SNP")
 
 SNPB.df <- data.frame(x1 = 1:N,
                       x2 = 2:(N + 1),
-                      y1 = rep(9, N),
-                      y2 = rep(10, N),
+                      y1 = rep(3, N), 
+                      y2 = rep(4, N), 
                       t = tB,
-                      r = nuclB2,
+                      r = nuclB1,
                       marker.type = "SNP")
 
-rbind(SNPA.df, SNPB.df) %>%
+SNPC.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(5, N), 
+                      y2 = rep(6, N), 
+                      t = tC,
+                      r = nuclC1,
+                      marker.type = "SNP")
+
+SNPD.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(7, N), 
+                      y2 = rep(8, N), 
+                      t = tD,
+                      r = nuclD1,
+                      marker.type = "SNP")
+
+rbind(SNPA.df, SNPB.df, SNPC.df, SNPD.df) %>%
   mutate(t = factor(t,
                     levels = c("DNA1",
                                "DNA2",
-                               "X"),
+                               "DNA3",
+                               "DNA4"),
                     ordered = TRUE)) %>%
   ggplot() +
   coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 3, 7)]) +
+  scale_fill_manual(values = cbbPalette[c(3, 3, 6, 6)]) +
   geom_rect(mapping = aes(xmin = x1,
                           xmax = x2,
                           ymin = y1,
@@ -580,10 +261,102 @@ rbind(SNPA.df, SNPB.df) %>%
 
 ---
 <div id="rsn">
-  <p>10/45</p>
+  <p>5/45</p>
 </div>
 
-## Des chiffres et des lettres
+### Polymorphisme d'un seul nucléotide (SNP)
+
+```{r}
+set.seed(5)
+
+idx.SNP <- sample(1:N, size = 1)
+if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
+  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
+} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
+  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
+}
+
+tA[idx.SNP] <- "X"
+tB[idx.SNP] <- "X"
+tC[idx.SNP] <- "X"
+tD[idx.SNP] <- "X"
+
+SNPA.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(1, N), 
+                      y2 = rep(2, N), 
+                      t = tA,
+                      r = nuclA1,
+                      marker.type = "SNP")
+
+SNPB.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(3, N), 
+                      y2 = rep(4, N), 
+                      t = tB,
+                      r = nuclB1,
+                      marker.type = "SNP")
+
+SNPC.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(5, N), 
+                      y2 = rep(6, N), 
+                      t = tC,
+                      r = nuclC1,
+                      marker.type = "SNP")
+
+SNPD.df <- data.frame(x1 = 1:N,
+                      x2 = 2:(N + 1),
+                      y1 = rep(7, N), 
+                      y2 = rep(8, N), 
+                      t = tD,
+                      r = nuclD1,
+                      marker.type = "SNP")
+
+rbind(SNPA.df, SNPB.df, SNPC.df, SNPD.df) %>%
+  mutate(t = factor(t,
+                    levels = c("DNA1",
+                               "DNA2",
+                               "DNA3",
+                               "DNA4",
+                               "X"),
+                    ordered = TRUE)) %>%
+  ggplot() +
+  coord_fixed() +
+  scale_fill_manual(values = cbbPalette[c(3, 3, 6, 6, 7)]) +
+  geom_rect(mapping = aes(xmin = x1,
+                          xmax = x2,
+                          ymin = y1,
+                          ymax = y2,
+                          fill = t),
+            color = "black",
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 2,
+                label = r),
+            size = 4) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.border = element_blank(),
+        panel.grid = element_blank())
+
+```
+
+
+---
+<div id="rsn">
+  <p>6/45</p>
+</div>
+
+### Des chiffres et des lettres
+
+.pull-left[
 
 ```{r}
 N <- 6
@@ -638,13 +411,14 @@ p1 <- SNP.df %>%
   geom_text(aes(x = x1 + (x2 - x1) / 2,
                 y = y1 + (y2 - y1) / 2,
                 label = lab),
-            size = 5) +
+            size = 15) +
   scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
   xlab("Individus") +
   ylab("SNPs") +
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
+        axis.title = element_text(size = 25, face = "bold"),
         axis.ticks = element_blank(),
         legend.position = "none",
         plot.title = element_text(hjust = 0.5),
@@ -652,18 +426,14 @@ p1 <- SNP.df %>%
         panel.grid = element_blank(),
         text = element_text(size = 15))
 
- 
-
-```
-
-
-```{r, fig.height = 2}
 print(p1)
 ```
 
---
+]
 
-```{r, fig.height = 2}
+.pull-right[
+
+```{r}
 p3 <- BIM.df %>% 
   ggplot() +
   coord_fixed() +
@@ -680,7 +450,7 @@ p3 <- BIM.df %>%
   geom_text(aes(x = x1 + (x2 - x1) / 2,
                 y = y1 + (y2 - y1) / 2,
                 label = lab),
-            size = 5) +
+            size = 15) +
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -690,79 +460,29 @@ p3 <- BIM.df %>%
         plot.title = element_text(hjust = 0.5),
         panel.border = element_blank(),
         panel.grid = element_blank(),
-        text = element_text(size = 12))
+        text = element_text(size = 15),
+        legend.text = element_text(size = 25),
+        legend.key.size = unit(15, "mm"))
 
 print(p3)
 ```
 
-
+]
 
 ---
 <div id="rsn">
-  <p>10/45</p>
+  <p>6/45</p>
 </div>
 
-## Des chiffres et des lettres 
+### Des chiffres et des lettres
+
+.pull-left[
 
 ```{r}
-N <- 6
-SNP.lab <- c("A", "T", "A", "A", "A", "A",
-             "C", "C", "C", "A", "A", "A",
-             "G", "T", "T", "G", "G", "G",
-             "T", "T", "T", "T", "T", "C")
-SNP.x <- rep(1:6, 4)
-SNP.y <- c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6))
+print(p1)
+```
 
-geno.lab <- c("1", "0", "0",
-              "0", "1", "2",
-              "1", "1", "0",
-              "2", "2", "1")
-geno.x <- rep(1:3, 4)
-geno.y <- c(rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3))
-
-ind <- rep(as.character(c(1, 1, 2, 2, 3, 3)), 4)
-
-SNP.df <- data.frame(x1 = SNP.x,
-                     x2 = SNP.x + 1,
-                     y1 = SNP.y,
-                     y2 = SNP.y + 1,
-                     lab = SNP.lab,
-                     ind = ind)
-
-geno.df <- data.frame(x1 = geno.x,
-                      x2 = geno.x + 1,
-                      y1 = geno.y,
-                      y2 = geno.y + 1,
-                      lab = geno.lab,
-                      ind = rep(as.character(1:3), 4))
-
-p1 <- SNP.df %>% 
-  ggplot() +
-  coord_fixed() +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = ind),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = lab),
-            size = 5) +
-  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
-  xlab("Individus") +
-  ylab("SNPs") +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        text = element_text(size = 15))
-
+```{r}
 p2 <- geno.df %>% 
   ggplot() +
   coord_fixed() +
@@ -776,120 +496,52 @@ p2 <- geno.df %>%
   geom_text(aes(x = x1 + (x2 - x1) / 2,
                 y = y1 + (y2 - y1) / 2,
                 label = lab),
-            size = 5) +
+            size = 15) +
   scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
-  xlab("") +
+  xlab("Individus") +
   ylab("SNPs") +
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
+        axis.title = element_text(size = 25, face = "bold"),
         axis.ticks = element_blank(),
         legend.position = "none",
         plot.title = element_text(hjust = 0.5),
         panel.border = element_blank(),
         panel.grid = element_blank(),
         text = element_text(size = 15))
-```
- 
-```{r, fig.height=2}
-print(p1)
-```
 
-```{r, fig.height=2}
 print(p2)
 ```
 
----
-<div id="rsn">
-  <p>10/45</p>
-</div>
+]
 
-## Des chiffres et des lettres
+.pull-right[
 
-```{r, fig.height=2}
-print(p1)
+```{r}
+print(p3)
 ```
 
-
-$$G = \begin{pmatrix}
-    2 & 2 & 1 \\
-    1 & 1 & 0 \\
-    0 & 1 & 2 \\
-    1 & 0 & 0
-\end{pmatrix}$$
-
+]
 
 ---
 background-image: url("figure/arabidopsis.jpg")
 background-size: cover
-<!-- class: bottom coupure -->
+class: bottom coupure 
 
 # Adaptation locale
 
 <div id="rsn">
-  <p>11/45</p>
+  <p>7/45</p>
 </div>
-
----
-<div id="rsn">
-  <p>12/45</p>
-</div>
-
-## L'indice de fixation
-
-Allèle alternatif : C
-
-.pull-left[
-#### <center> Population 1
-<center><img src="figure/fst_1.png" width="450" height="300"/></center>
-
-$$p_1 = 0$$
-
-]
-
-.pull-right[
-#### <center> Population 2
-<center><img src="figure/fst_2.png" width="450" height="300"/></center>
-
-$$p_2 = 0$$
-
-]
-
-
 
 
 ---
 <div id="rsn">
-  <p>12/45</p>
+  <p>8/45</p>
 </div>
 
-## L'indice de fixation
-
-Allèle alternatif : C
-
-.pull-left[
-#### <center> Population 1
-<center><img src="figure/fst_1.png" width="450" height="300"/></center>
-
-$$p_1 = 0$$
-
-]
-
-.pull-right[
-#### <center> Population 2
-<center><img src="figure/fst_3.png" width="450" height="300"/></center>
-
-$$p_2 = 1$$
-
-]
-
-
----
-<div id="rsn">
-  <p>12/45</p>
-</div>
-
-## L'indice de fixation
+### L'indice de fixation
 
 Allèle alternatif : C
 
@@ -909,119 +561,87 @@ $$p_2 = 40/45 \simeq 0.89$$
 
 ]
 
+???
+
+La statistique la plus utilisée pour quantifier le degré de différenciation entre deux populations pour un SNP donné, c'est l'indice de fixation.
+
+Première façon de détecter de la différenciation, c'est de regarder la fréquence allélique au sein de chaque pop
+
+Par exemple, si on s'intéresse à un locus particulier où on a les allèles A et C et qu'on regarde leur fréquence respective on peut avoir une idée de si un SNP est discriminant ou non.
+
 
 ---
 <div id="rsn">
-  <p>12/45</p>
+  <p>8/45</p>
 </div>
 
-## L'indice de fixation
+### L'indice de fixation
 
-#### Définition
+
+#### Définition (Wright, 1943)
+
+.pull-left[
 
 $$F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_k - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
+]
 
-- $\displaystyle \bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$
+.pull-right[
+$$\bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$$
+]
 
 --
 
-#### Cas $N = 2$
+#### Exemple de scan à $F_{ST}$ (Xu et al., 2010)
 
-$$F_{ST} = \frac{(p_1 - \bar{p})^2 + (p_2 - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
+<center><img src="figure/tibetan_fst.png" height = "250"/></center>
 
+???
+
+Il y a plusieurs définitions de l'indice de fixation, autrement appelé FST, et 
+l'une d'entre elles est celle qui a été donnée par Wright, et qu'on utilisera
+par la suite en guise de comparaison.
+
+L'heuristique de cette statistique est très simple, si une des N populations affiche une fréquence très différente de la fréquence moyenne, alors il y a de grandes chances que ce SNP soit fortement associé avec la différenciation de cette population, relativement aux autres.
 
 
 ---
 <div id="rsn">
-  <p>12/45</p>
+  <p>8/45</p>
 </div>
 
-## L'indice de fixation
+### L'indice de fixation
 
-Allèle alternatif : C
+
+#### Définition (Wright, 1943)
 
 .pull-left[
-#### <center> Population 1
-<center><img src="figure/fst_1.png" width="450" height="300"/></center>
 
-$$p_1 = 0$$
-
+$$F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_k - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
 ]
 
 .pull-right[
-#### <center> Population 2
-<center><img src="figure/fst_2.png" width="450" height="300"/></center>
-
-$$p_2 = 0$$
-
+$$\bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$$
 ]
 
-$$F_{ST} = 0$$
+
+
+#### Test de Lewontin-Krakauer
+
+$$T_{LK} = \frac{N-1}{\bar{F}_{ST}} F_{ST}$$
+
+$T_{LK}$ suit une loi du $\chi^2$ à $N-1$ degrés de liberté
+
+??? 
+
+On n'a pas toujours un Manhattan plot aussi joli où des pics évidents ressortent
 
 
 ---
 <div id="rsn">
-  <p>12/45</p>
+  <p>9/45</p>
 </div>
 
-## L'indice de fixation
-
-Allèle alternatif : C
-
-.pull-left[
-#### <center> Population 1
-<center><img src="figure/fst_1.png" width="450" height="300"/></center>
-
-$$p_1 = 0$$
-
-]
-
-.pull-right[
-#### <center> Population 2
-<center><img src="figure/fst_3.png" width="450" height="300"/></center>
-
-$$p_2 = 1$$
-
-]
-
-
-$$F_{ST} = 2$$
-
----
-<div id="rsn">
-  <p>12/45</p>
-</div>
-
-## L'indice de fixation
-
-Allèle alternatif : C
-
-.pull-left[
-#### <center> Population 1
-<center><img src="figure/fst_5.png" width="450" height="300"/></center>
-
-$$p_1 = 26/45 \simeq 0.58$$
-
-]
-
-.pull-right[
-#### <center> Population 2
-<center><img src="figure/fst_4.png" width="450" height="300"/></center>
-
-$$p_2 = 40/45 \simeq 0.89$$
-
-]
-
-
-$$F_{ST} \simeq 0.25$$
-
-
----
-<div id="rsn">
-  <p>13/45</p>
-</div>
-
-## Modèles démographiques
+### Modèles démographiques
 
 ```{r}
 circleFun <- function(center = c(0, 0),
@@ -1201,13 +821,20 @@ cowplot::plot_grid(p1, p2, p3, p4, labels = c("", "", "", ""), ncol = 2)
 ```
 
 
+???
+
+Qui dit génétique des populations dit modèle démographique. L'histoire démographique des populations a notamment un impact sur la façon dont évoluent les fréquences d'allèles.
+
+Dans le cas d'un modèle en île que l'on a ici, le fait qu'il y ait des mouvements migratoires entre les populations va avoir tendance à maintenir la diversité allélique et limiter la différenciation, alors que si on n'a pas du tout de migration, les populations vont probablement se différencier plus rapidement.
+
+Dans le cas d'un modèle de divergence, on a une population ancestrale qui va connaître un épisode de divergence et donc donner naissance à deux sous-populations, puis une des sous-populations va elle-même subir un autre épisode de divergence. Un peu à la manière de ce que l'on peut voir en phylogénie, les populations P2 et P3 ici vont être plus apparentées entre elles que par rapport à P1. 
 
 ---
 <div id="rsn">
-  <p>13/45</p>
+  <p>9/45</p>
 </div>
 
-## Modèles démographiques
+### Modèles démographiques
 
 ```{r}
 df.crossNWSE <- data.frame(x1 = -1.5, x2 = 3.5, y1 = 2.5, y2 = -1.5)
@@ -1395,360 +1022,87 @@ cowplot::plot_grid(p1, p2, p3, p4, labels = c("", "", "", ""), ncol = 2)
 ---
 background-image: url("figure/pca_ex.png")
 background-size: cover
-<!-- class: bottom coupure -->
+class: bottom coupure
 
 <h1 style="text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;"> L'Analyse en Composantes Principales (ACP)</h1>
 
 <div id="rsn">
-  <p>14/45</p>
+  <p>10/45</p>
 </div>
-
-
 
 
 ---
 <div id="rsn">
-  <p>15/45</p>
+  <p>11/45</p>
 </div>
 
-## Principe de l'ACP
-
-```{r}
-set.seed(42)
-X <- matrix(c(0.1, -0.2, -0.2, 0.1), nrow = 2)
-mvg <- MASS::mvrnorm(n = 200, c(0, 0), X %*% t(X), tol = 1e-6, empirical = FALSE, EISPACK = FALSE)
-obj.pca <- prcomp(mvg)
-ind.label <- "un individu"
-x1 <- c(1, 0)
-x2 <- c(-1, 0)
-x3 <- c(0, 1)
-x4 <- c(0, -1)
-y1 <- obj.pca$rotation %*% x1
-y2 <- obj.pca$rotation %*% x2
-y3 <- obj.pca$rotation %*% x3
-y4 <- obj.pca$rotation %*% x4
-
-pc1.1 <- data.frame(x1 = 0, x2 = y1[1], y1 = 0, y2 = y1[2])
-pc1.2 <- data.frame(x1 = 0, x2 = y2[1], y1 = 0, y2 = y2[2])
-pc2.1 <- data.frame(x1 = 0, x2 = y3[1], y1 = 0, y2 = y3[2])
-pc2.2 <- data.frame(x1 = 0, x2 = y4[1], y1 = 0, y2 = y4[2])
-
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
-```
-
-???
-
-- Réduction de la dimension
-- Nouvelle représentation des données
-
----
-<div id="rsn">
-  <p>15/45</p>
-</div>
-
-## Principe de l'ACP
-
-```{r}
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  theme_bw()
-```
-
-
----
-<div id="rsn">
-  <p>15/45</p>
-</div>
-
-## Principe de l'ACP
-
-```{r}
-data.frame(x = mvg[, 1], y = mvg[, 2]) %>%
-  filter(x > -1 & x < 1, y > -1 & y < 1) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  geom_segment(data = pc1.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc1.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2.1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  geom_segment(data = pc2.2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = mvg[59, 1], y = mvg[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = x[59], 
-                   y = y[59] + 0.25, 
-                   xend = x[59], 
-                   yend = y[59] + 0.05), 
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
-```
-
-
----
-<div id="rsn">
-  <p>15/45</p>
-</div>
-
-## Principe de l'ACP
-
-```{r}
-pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
-pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
-
-data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = obj.pca$x[59, 1], 
-                   y = obj.pca$x[59, 2] + 0.25, 
-                   xend = obj.pca$x[59, 1],  
-                   yend = obj.pca$x[59, 2] + 0.05),
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("Variable 1") +
-  ylab("Variable 2") +
-  theme_bw()
-```
-
-
-
----
-<div id="rsn">
-  <p>15/45</p>
-</div>
-
-## Principe de l'ACP
-
-```{r}
-pc1 <- data.frame(x1 = -1, x2 = 1, y1 = 0, y2 = 0)
-pc2 <- data.frame(x1 = 0, x2 = 0, y1 = -1, y2 = 1)
-
-data.frame(x = obj.pca$x[, 1], y = obj.pca$x[, 2]) %>%
-  ggplot(aes(x, y)) +
-  geom_point(color = "steelblue") + 
-  geom_segment(data = pc1, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#D55E00", size = 1) +
-  geom_segment(data = pc2, aes(x = x1, y = y1, xend = x2, yend = y2), col = "#009E73", size = 1) +
-  annotate("text", x = obj.pca$x[59, 1], y = obj.pca$x[59, 2] + 0.3, label = ind.label) +
-  geom_segment(aes(x = obj.pca$x[59, 1], 
-                   y = obj.pca$x[59, 2] + 0.25, 
-                   xend = obj.pca$x[59, 1],  
-                   yend = obj.pca$x[59, 2] + 0.05),
-               colour = "black", 
-               size = 0.5,
-               arrow = arrow(length = unit(0.25, "cm"), type = "closed")) +
-  coord_equal() +
-  xlim(-1, 1) +
-  ylim(-1, 1) +
-  xlab("PC1") +
-  ylab("PC2") +
-  theme_bw()
-```
-
-
-
----
-<div id="rsn">
-  <p>16/45</p>
-</div>
-
-
-## Normalisation
-
-
-```{r, include = FALSE}
-N <- 6
-SNP.lab <- c("A", "T", "A", "A", "A", "A",
-             "C", "C", "C", "A", "A", "A",
-             "G", "T", "T", "G", "G", "G",
-             "T", "T", "T", "T", "T", "C")
-SNP.x <- rep(1:6, 4)
-SNP.y <- c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6))
-
-geno.lab <- c("1", "0", "0",
-              "0", "1", "2",
-              "1", "1", "0",
-              "2", "2", "1")
-geno.x <- rep(1:3, 4)
-geno.y <- c(rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3))
-
-ind <- rep(as.character(c(1, 1, 2, 2, 3, 3)), 4)
-
-SNP.df <- data.frame(x1 = SNP.x,
-                     x2 = SNP.x + 1,
-                     y1 = SNP.y,
-                     y2 = SNP.y + 1,
-                     lab = SNP.lab,
-                     ind = ind)
-
-geno.df <- data.frame(x1 = geno.x,
-                      x2 = geno.x + 1,
-                      y1 = geno.y,
-                      y2 = geno.y + 1,
-                      lab = geno.lab,
-                      ind = rep(as.character(1:3), 4))
-
-p1 <- SNP.df %>% 
-  ggplot() +
-  coord_fixed() +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = ind),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = lab),
-            size = 5) +
-  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
-  xlab("Individus") +
-  ylab("SNPs") +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        text = element_text(size = 15))
-
-```
-
-
-```{r, fig.height=2}
-print(p1)
-```
-
-
-$$\begin{pmatrix}
-    2 \color{#009E73}{-2 p_1} & 2 \color{#009E73}{-2 p_1} & 1 \color{#009E73}{-2 p_1} \\
-    1 \color{#56B4E9}{-2 p_2} & 1 \color{#56B4E9}{-2 p_2} & 0 \color{#56B4E9}{-2 p_2} \\
-    0 \color{#CC79A7}{-2 p_3} & 1 \color{#CC79A7}{-2 p_3} & 2 \color{#CC79A7}{-2 p_3} \\
-    1 \color{#D55E00}{-2 p_4} & 0 \color{#D55E00}{-2 p_4} & 0 \color{#D55E00}{-2 p_4}
-\end{pmatrix}$$
+### L'ACP en génétique des populations
 
 .pull-left[
-- $\displaystyle p_i = \frac{1}{2n} \sum_{j=1}^{n} G_{ij}$
+
+- Normalisation de la matrice de génotypes
+
+$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
+
+- Calcul de la matrice d'apparentement génétique
+
+$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
+
+
+- Diagonalisation de $G_{RM}$
+
+
+$$G_{RM} = U \Sigma^2 U^T$$
+
+où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.  
 ]
 
 .pull-right[
 
-]
----
-<div id="rsn">
-  <p>16/45</p>
-</div>
-
-## Normalisation
-
-
-```{r, fig.height=2}
-print(p1)
+```{r, echo = TRUE, eval = FALSE}
+p<-apply(G,MARGIN=2,mean)/2  
+s<-sqrt(2*p*(1-p))
+G.tilde<-scale(G, 
+               center=T, 
+               scale=s)
 ```
 
 
-$$\tilde{G} = \begin{pmatrix}
-    \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(1 \color{#009E73}{-2 p_1)/s_1} \\
-    \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(0 \color{#56B4E9}{-2 p_2)/s_2} \\
-    \color{#CC79A7}(0 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(1 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(2 \color{#CC79A7}{-2 p_3)/s_3} \\
-    \color{#D55E00}(1 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4}
-\end{pmatrix}$$
 
-.pull-left[
-- $\displaystyle p_i = \frac{1}{2n} \sum_{j=1}^{n} G_{ij}$
-]
-
-.pull-right[
-- $\displaystyle s_i = \sqrt{2 p_i (1 - p_i)}$ 
 ]
 
 
 ---
 <div id="rsn">
-  <p>17/45</p>
+  <p>11/45</p>
 </div>
 
-## Qui se ressemblent...
+### L'ACP en génétique des populations
+
+.pull-left[
+
+- Normalisation de la matrice de génotypes
+
+$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
+
+- Calcul de la matrice d'apparentement génétique
+
+$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
+
+
+- Diagonalisation de $G_{RM}$
+
+
+$$G_{RM} = U \Sigma^2 U^T$$
+
+où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.  
+]
+
+.pull-right[
 
 <br>
 
-.pull-left[
-  ![](figure/tmp_img.jpg)
-]
-
---
-
-.pull-right[
-  #### Mesure de similarité 
-  
-  $$<\tilde{G}_{.,i}, \tilde{G}_{., j}>$$
-  
-  #### Matrice d'apparentement génétique
-  
-  $$G_{RM} = \left(\frac{1}{p}<\tilde{G}_{.,i}, \tilde{G}_{., j}>\right)_{1 \leq i,j \leq n}$$
-
-]
-
-
-???
-
-Visualisation de la matrice d'apparentement
-
----
-<div id="rsn">
-  <p>18/45</p>
-</div>
-
-
-## ...se retrouvent ensemble 
-
-```{r}
+```{r, fig.height = 8}
 G <- readRDS("data/isl.rds")
 pop <- G$pop
 pop <- pop[seq(1, ncol(G$geno), by = 5)]
@@ -1758,49 +1112,44 @@ G <- G[p > 0, ]
 p <- p[p > 0]
 Gn <- scale(t(G), center = TRUE, scale = sqrt(2 * p * (1 - p)))
 GRM <- cor(t(Gn))
-```
-
-.pull-left[
-
-#### <center> Matrice de génotypes </center>
-
-```{r}
-rownames(G) <- NULL
-colnames(G) <- NULL
-print(G[1:15, 1:5])
-```
-]
-
---
-
-.pull-right[
-
-#### <center> Matrice d'apparentement génétique </center>
-
-
-```{r, fig.height=8}
 corrplot::corrplot(GRM, method = "color", tl.pos = "n")
 ```
+
 
 ]
 
 
 ---
 <div id="rsn">
-  <p>18/45</p>
+  <p>11/45</p>
 </div>
 
-
-## ...se retrouvent ensemble 
-
+### L'ACP en génétique des populations
 
 .pull-left[
 
-#### <center> Matrice de génotypes </center>
+- Normalisation de la matrice de génotypes
+
+$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
+
+- Calcul de la matrice d'apparentement génétique
+
+$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
+
+
+- Diagonalisation de $G_{RM}$
+
+
+$$G_{RM} = U \Sigma^2 U^T$$
+
+où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.  
+]
+
+.pull-right[
+
+<br>
 
 ```{r, include = FALSE}
-obj.hapmap <- readRDS("data/hapmap.rds")
-obj.popres <- readRDS("data/popres.rds")
 obj.isl <- pcadapt::pcadapt(G, K = 2)
 ```
 
@@ -1816,62 +1165,141 @@ ggplot(ggdf, aes(x = PC1, y = PC2)) +
         text = element_text(size = 25),
         legend.position = "none")
 ```
-]
-
-
-.pull-right[
-
-#### <center> Matrice d'apparentement génétique </center>
-
-
-```{r, fig.height=8}
-corrplot::corrplot(GRM, method = "color", tl.pos = "n")
-```
 
 ]
 
-
-???
-
-Les clusters correspondent bien aux populations
 
 ---
 <div id="rsn">
-  <p>18/45</p>
+  <p>11/45</p>
 </div>
 
-## ...se retrouvent ensemble
-
+### L'ACP en génétique des populations
 
 .pull-left[
 
-#### <center> Matrice de génotypes </center>
+- Normalisation de la matrice de génotypes
+
+$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
+
+- Calcul de la matrice d'apparentement génétique
+
+$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
+
+
+- Décomposition en valeurs singulières de $\tilde{G}$
+
+
+$$\tilde{G} \simeq U \Sigma V^T$$
+
+où $\Sigma \in M_K(\mathbb{R})$, $U \in M_{nK}(\mathbb{R})$, $V \in M_{pK}(\mathbb{R})$ avec $K < n$.  
+
+]
+
+.pull-right[
+
+<br>
+
+```{r, include = FALSE}
+obj.isl <- pcadapt::pcadapt(G, K = 2)
+```
 
 ```{r, fig.height = 8}
 ggdf <- data.frame(PC1 = obj.isl$scores[, 1],
-                   PC2 = obj.isl$scores[, 2],
-                   pop = as.factor(pop))
+                   PC2 = obj.isl$scores[, 2])
 
-ggplot(ggdf, aes(x = PC1, y = PC2, fill = pop)) +
-  geom_point(size = 7.5, shape = 21, stroke = 1) +
-  scale_fill_manual(labels = sort(unique(ggdf$pop)),
-                    values = as.character(obj.popres$palette.fr[c(1, 2, 4)])) +
+ggplot(ggdf, aes(x = PC1, y = PC2)) +
+  geom_point(size = 7.5, shape = 21, stroke = 1, fill = "steelblue") +
   coord_equal() +
   theme_bw() +
   theme(axis.text = element_text(face = "bold"),
         text = element_text(size = 25),
         legend.position = "none")
 ```
+
+
+
 ]
 
 
+---
+<div id="rsn">
+  <p>11/45</p>
+</div>
+
+### L'ACP en génétique des populations
+
+.pull-left[
+
+- Normalisation de la matrice de génotypes
+
+$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
+
+- Calcul de la matrice d'apparentement génétique
+
+$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
+
+
+- Décomposition en valeurs singulières de $\tilde{G}$
+
+
+$$\tilde{G} \simeq U \Sigma V^T$$
+
+où $\Sigma \in M_K(\mathbb{R})$, $U \in M_{nK}(\mathbb{R})$, $V \in M_{pK}(\mathbb{R})$ avec $K < n$.  
+
+]
+
 .pull-right[
 
-#### <center> Matrice d'apparentement génétique </center>
+<br>
+
+```{r, include = FALSE}
+obj.isl <- pcadapt::pcadapt(G, K = 2)
+```
+
+```{r, include = FALSE}
+K <- 15
+x.I <- readRDS("data/isl.rds")
+x.D <- readRDS("data/div.rds")
+
+res.I <- pcadapt(x.I$geno, K = K)
+res.D <- pcadapt(x.D$geno, K = K)
+
+model <- c(rep("isl", K), rep("div", K))
+df <- data.frame(model = model,
+                 x = c(1:K, 1:K),
+                 values = c(res.I$singular.values^2 / length(res.I$maf),
+                            res.D$singular.values^2 / length(res.D$maf)))
+```
 
 
-```{r, fig.height=8}
-corrplot::corrplot(GRM, method = "color", tl.pos = "n")
+```{r}
+df %>%
+  filter(model == "isl") %>%
+  ggplot(aes(x = x, y = values)) +
+  geom_line(color = cbbPalette[3], size = 3) +
+  geom_point(color = cbbPalette[6], size = 5) +
+  xlab("PC") +
+  ylab("Proportion de variance expliquée") +
+  annotate("text",
+           x = 6,
+           y = df$values[df$model == "isl"][2],
+           label = "K = 2",
+           size = 15,
+           fontface = "italic",
+           colour = "black") +
+  geom_segment(aes(x = 4,
+                   y = df$values[df$model == "isl"][2],
+                   xend = 2,
+                   yend = df$values[df$model == "isl"][2]),
+               colour = "black",
+               size = 1,
+               arrow = arrow(length = unit(8, "pt"),
+                             type = "closed")) +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(size = 20, face = "bold")) 
+
 ```
 
 ]
@@ -1879,47 +1307,27 @@ corrplot::corrplot(GRM, method = "color", tl.pos = "n")
 
 ---
 <div id="rsn">
-  <p>19/45</p>
+  <p>12/45</p>
 </div>
 
-## HapMap
+### POPRES (Novembre et al., 2008)
 
 ```{r}
+obj.popres <- readRDS("data/popres.rds")
+```
 
-superpop <- as.character(obj.hapmap$pop)
-superpop[obj.hapmap$pop %in% c("ASW", "LWK", "YRI", "MKK")] <- "Africains"
-superpop[obj.hapmap$pop %in% c("CEU", "TSI")] <- "Européens"
-superpop[obj.hapmap$pop %in% c("CHB", "JPT", "CHD")] <- "Est-Asiatiques"
-superpop[obj.hapmap$pop == "GIH"] <- "Indiens d'Asie"
-superpop[obj.hapmap$pop == "MEX"] <- "Mexicains"
+![](figure/popres-1.png)
 
-ggdf <- data.frame(PC1 = obj.hapmap$u[, 1],
-                   PC2 = obj.hapmap$u[, 2],
-                   pop = obj.hapmap$pop,
-                   superpop = as.factor(superpop))
+???
 
-ggplot(ggdf, aes(x = PC1, y = PC2, fill = superpop)) +
-  geom_point(size = 2.5, shape = 21, stroke = 1) +
-  scale_fill_manual(labels = sort(unique(ggdf$superpop)),
-                    values = as.character(obj.popres$palette.fr[c(1, 2, 25, 6, 7)])) +
-  guides(fill = guide_legend(ncol = 1)) +
-  theme_bw() +
-  theme(axis.text = element_text(face = "bold"),
-        text = element_text(size = 15),
-        legend.text = element_text(size = 15),
-        legend.key.height = unit(1, "line"),
-        legend.key.width = unit(1, "line"),
-        legend.title = element_blank(),
-        legend.direction = "horizontal",
-        legend.position = c(0.15, 0.85),
-        legend.background = element_rect(fill = alpha("white", 0)),
-        legend.key = element_rect(fill = alpha("white", 0)))
-``` 
+Structure de populations continue
+
+Reflète la structure géographique
 
 
 ---
 <div id="rsn">
-  <p>20/45</p>
+  <p>13/45</p>
 </div>
 
 <br>
@@ -1940,110 +1348,13 @@ des clusters de façon non supervisée.
 
 - Ces clusters correspondent aux populations auxquelles ces individus appartiennent. 
 
-- Quels sont les marqueurs génétiques qui ont permis cela `r emojifont::emoji('question')`
+- Comment cela peut-il nous permettre de détecter des locus sous sélection `r emojifont::emoji('question')`
 
 
 ]
 
 
 
----
-<div id="rsn">
-  <p>21/45</p>
-</div>
-
-## Réaliser une ACP en génétique des populations
-
-- Normalisation de la matrice de génotypes
-
-$$\tilde{G} = \begin{pmatrix}\begin{smallmatrix}
-    \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(1 \color{#009E73}{-2 p_1)/s_1} \\
-    \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(0 \color{#56B4E9}{-2 p_2)/s_2} \\
-    \color{#CC79A7}(0 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(1 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(2 \color{#CC79A7}{-2 p_3)/s_3} \\
-    \color{#D55E00}(1 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4}
-\end{smallmatrix}\end{pmatrix}$$
-
---
-
-- Calcul de la matrice d'apparentement génétique
-
-$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
-
---
-
-- Diagonalisation de $G_{RM}$
-
-
-$$G_{RM} = U \Sigma^2 U^T$$
-
-où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.  
-
-
----
-<div id="rsn">
-  <p>21/45</p>
-</div>
-
-## Réaliser une ACP en génétique des populations
-
-- Normalisation de la matrice de génotypes
-
-$$\tilde{G} = \begin{pmatrix}\begin{smallmatrix}
-    \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(1 \color{#009E73}{-2 p_1)/s_1} \\
-    \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(0 \color{#56B4E9}{-2 p_2)/s_2} \\
-    \color{#CC79A7}(0 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(1 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(2 \color{#CC79A7}{-2 p_3)/s_3} \\
-    \color{#D55E00}(1 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4}
-\end{smallmatrix}\end{pmatrix}$$
-
-
-
-- Calcul de la matrice d'apparentement génétique
-
-$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
-
-
-
-- Diagonalisation de $G_{RM}$
-
-
-$$G_{RM} \simeq U \Sigma^2 U^T$$
-
-où $\Sigma \in M_K(\mathbb{R})$ et $U \in M_{nK}(\mathbb{R})$, avec $K < n$.  
-
-???
-
-- Explication du choix de $K$ ultérieur.
-
----
-<div id="rsn">
-  <p>21/45</p>
-</div>
-
-## Réaliser une ACP en génétique des populations
-
-- Normalisation de la matrice de génotypes
-
-$$\tilde{G} = \begin{pmatrix}\begin{smallmatrix}
-    \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(2 \color{#009E73}{-2 p_1)/s_1} & \color{#009E73}(1 \color{#009E73}{-2 p_1)/s_1} \\
-    \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(1 \color{#56B4E9}{-2 p_2)/s_2} & \color{#56B4E9}(0 \color{#56B4E9}{-2 p_2)/s_2} \\
-    \color{#CC79A7}(0 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(1 \color{#CC79A7}{-2 p_3)/s_3} & \color{#CC79A7}(2 \color{#CC79A7}{-2 p_3)/s_3} \\
-    \color{#D55E00}(1 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4} & \color{#D55E00}(0 \color{#D55E00}{-2 p_4)/s_4}
-\end{smallmatrix}\end{pmatrix}$$
-
-
-
-- Calcul de la matrice d'apparentement génétique
-
-$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
-
-
-
-- Décomposition en valeurs singulières de $\tilde{G}$
-
-
-$$\tilde{G} \simeq U \Sigma V^T$$
-
-où $\Sigma \in M_K(\mathbb{R})$, $U \in M_{nK}(\mathbb{R})$, $V \in M_{pK}(\mathbb{R})$ avec $K < n$.  
 
 
 ---
@@ -2054,15 +1365,15 @@ class: bottom, coupure
 # Une première statistique de test
 
 <div id="rsn">
-  <p>29/45</p>
+  <p>14/45</p>
 </div>
 
 ---
 <div id="rsn">
-  <p>22/45</p>
+  <p>15/45</p>
 </div>
 
-## Corrélation à un axe principal
+### La communalité
 
 .pull-left[
 
@@ -2073,6 +1384,15 @@ $$\tilde{G} \simeq U \Sigma V^T$$
 - Corrélation du $i$-ème SNP au $k$-ème axe principal
 
 $$\rho_{ik} = \frac{\sqrt{\lambda_{k}} V_{ik}}{\sqrt{n - 1}}$$
+
+- Définition pour le $i$-ème SNP
+
+\begin{align}
+h_i^2 &= \sum_{k=1}^K \rho_{ik}^2 = \frac{1}{n-1} \sum_{k=1}^K \lambda_k V_{ik}^2 \\
+&\simeq ||\tilde{G}_{.,i}^T U||_2^2
+\end{align}
+
+
 ]
 
 
@@ -2100,127 +1420,64 @@ $$\Sigma^2 = \begin{pmatrix}
 - Reprendre la décomposition précédente
 
 
----
-<div id="rsn">
-  <p>22/45</p>
-</div>
-
-## Corrélation à un axe principal
-
-.pull-left[
-
-- Décomposition en valeurs singulières de $\tilde{G}$
-
-$$\tilde{G} \simeq U \Sigma V^T$$
-
-- Corrélation du $\color{#009E73}{2}$-ème SNP au $\color{#009E73}{3}$-ème axe principal
-
-$$\rho_{23} = \frac{\sqrt{\lambda_{3}} V_{23}}{\sqrt{n - 1}}$$
-]
-
-
-.pull-right[
-
-#### <center> Matrice des loadings
-$$V = \begin{pmatrix}
-V_{11} & V_{12} & V_{13} \\
-V_{21} & V_{22} & \color{#009E73}{V_{23}} \\
-V_{31} & V_{32} & V_{33} \\
-V_{41} & V_{42} & V_{43} \\
-\vdots & \vdots & \vdots
-\end{pmatrix}$$
-
-#### <center> Variances
-$$\Sigma^2 = \begin{pmatrix}
-\lambda_1 & 0 & 0 \\
-0 & \lambda_2 & 0 \\
-0 & 0 & \color{#009E73}{\lambda_3}
-\end{pmatrix}$$
-]
 
 
 ---
 <div id="rsn">
-  <p>23/45</p>
+  <p>16/45</p>
 </div>
 
-## Communalité
+### POPRES
 
-.pull-left[
+```{r}
+d <- obj.popres$d
+stat <- (d[1]^2 * obj.popres$v[, 1]^2 + d[2]^2 * obj.popres$v[, 2]^2) / (nrow(obj.popres$u) - 1)
+n.keep <- floor(nrow(obj.popres$v) / 10)
+chr.odd.even <- obj.popres$chr %% 2
 
-- Définition pour le $i$-ème SNP
+s <- sort(stat, index.return = TRUE, decreasing = TRUE)$ix[1:n.keep]
+idx <- s[1:101]
+chr.odd.even[idx] <- 2
+chr.odd.even <- chr.odd.even[sort(s)]
 
-\begin{align}
-h_i^2 &= \sum_{k=1}^K \rho_{ik}^2 \\
-&= \frac{1}{n-1} \sum_{k=1}^K \lambda_k V_{ik}^2 \\
-&\simeq ||\tilde{G}_{.,i}^T U||_2^2
-\end{align}
-]
+df <- data.frame(position = 1:n.keep,
+                 stat = stat[sort(s)], 
+                 chr = chr.odd.even)
 
-.pull-right[
+df %>% 
+  ggplot(aes(x = position, y = stat, color = as.factor(chr))) +
+  geom_point() +
+  scale_color_manual(values = c("grey", "black", "red")) +
+  guides(colour = FALSE) +
+  ylab("Communalité") +
+  annotate("text",
+           x = c(5558, 16920, 35642),
+           y = c(0.27, 0.1, 0.1),
+           label = c("LCT", "HLA", "HERC2"),
+           size = 3,
+           colour = "black") +
+  theme_bw() +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
 
-#### <center> Matrice des loadings
-$$V = \begin{pmatrix}
-V_{11} & V_{12} & V_{13} \\
-V_{21} & V_{22} & V_{23} \\
-V_{31} & V_{32} & V_{33} \\
-V_{41} & V_{42} & V_{43} \\
-\vdots & \vdots & \vdots
-\end{pmatrix}$$
+???
+Manhattan plot
 
-#### <center> Variances
-$$\Sigma^2 = \begin{pmatrix}
-\lambda_1 & 0 & 0 \\
-0 & \lambda_2 & 0 \\
-0 & 0 & \lambda_3
-\end{pmatrix}$$
-]
+Signaux d'adaptation biologique connus 
+
+Décrire LCT, HLA, HERC2
+
+
 
 
 ---
 <div id="rsn">
-  <p>23/45</p>
+  <p>17/45</p>
 </div>
 
-## Communalité
-
-.pull-left[
-
-- Définition pour le $\color{#009E73}{3}$-ème SNP
-
-\begin{align}
-h_3^2 &= \sum_{k=1}^K \rho_{3k}^2 \\
-&= \frac{1}{n-1} \sum_{k=1}^K \lambda_k V_{3k}^2 \\
-&\simeq ||\tilde{G}_{.,i}^T U||_2^2
-\end{align}
-]
-
-.pull-right[
-
-#### <center> Matrice des loadings
-$$V = \begin{pmatrix}
-V_{11} & V_{12} & V_{13} \\
-V_{21} & V_{22} & V_{23} \\
-\color{#009E73}{V_{31}} & \color{#009E73}{V_{32}} & \color{#009E73}{V_{33}} \\
-V_{41} & V_{42} & V_{43} \\
-\vdots & \vdots & \vdots
-\end{pmatrix}$$
-
-#### <center> Variances
-$$\Sigma^2 = \begin{pmatrix}
-\color{#009E73}{\lambda_1} & 0 & 0 \\
-0 & \color{#009E73}{\lambda_2} & 0 \\
-0 & 0 & \color{#009E73}{\lambda_3}
-\end{pmatrix}$$
-]
-
-
----
-<div id="rsn">
-  <p>24/45</p>
-</div>
-
-## Lien avec l'indice de fixation
+### Lien avec l'indice de fixation
 
 ```{r, include = FALSE}
 G <- readRDS("data/isl.rds")
@@ -2254,8 +1511,6 @@ ggplot(ggdf, aes(x = PC1, y = PC2, fill = pop)) +
 ```
 ]
 
---
-
 .pull-right[
 
 ```{r, fig.height = 8}
@@ -2272,8 +1527,6 @@ data.frame(x = FSTMat$FST, y = x$stat) %>%
 ```
 ]
 
---
-
 \begin{align}
 F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 - \bar{p_i})}
 \end{align}
@@ -2281,10 +1534,10 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
 
 ---
 <div id="rsn">
-  <p>24/45</p>
+  <p>17/45</p>
 </div>
 
-## Lien avec l'indice de fixation
+### Lien avec l'indice de fixation
 
 .pull-left[
 
@@ -2329,10 +1582,10 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
 
 ---
 <div id="rsn">
-  <p>24/45</p>
+  <p>17/45</p>
 </div>
 
-## Lien avec l'indice de fixation
+### Lien avec l'indice de fixation
 
 .pull-left[
 
@@ -2378,10 +1631,10 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
 
 ---
 <div id="rsn">
-  <p>25/45</p>
+  <p>18/45</p>
 </div>
 
-## Lien avec l'indice de fixation
+### Lien avec l'indice de fixation
 
 .pull-left[
 
@@ -2410,94 +1663,13 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
 
 Généralisation de l'indice de fixation au cas de populations continues.
 
----
-<div id="rsn">
-  <p>26/45</p>
-</div>
-
-## POPRES
-
-```{r}
-ggdf <- data.frame(PC1 = -obj.popres$u[, 1],
-                   PC2 = -obj.popres$u[, 2],
-                   pop = obj.popres$pop.fr)
-
-ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) +
-  geom_point(size = 2.5, shape = 21, stroke = 1) +
-  scale_fill_manual(labels = sort(unique(ggdf$pop)),
-                    values = as.character(obj.popres$palette.fr)) +
-  guides(fill = guide_legend(nrow = 8)) +
-  theme_bw() +
-  theme(axis.text = element_text(face = "bold"),
-        legend.text = element_text(size = 15),
-        legend.key.height = unit(1, "line"),
-        legend.key.width = unit(2.5, "cm"),
-        legend.title = element_blank(),
-        legend.direction = "horizontal",
-        legend.position = "bottom")
-```
-
-???
-
-Structure de populations continue
-
-Reflète la structure géographique
-
 
 ---
 <div id="rsn">
-  <p>27/45</p>
+  <p>19/45</p>
 </div>
 
-## POPRES
-
-```{r}
-d <- obj.popres$d
-stat <- (d[1]^2 * obj.popres$v[, 1]^2 + d[2]^2 * obj.popres$v[, 2]^2) / (nrow(obj.popres$u) - 1)
-n.keep <- floor(nrow(obj.popres$v) / 10)
-chr.odd.even <- obj.popres$chr %% 2
-
-s <- sort(stat, index.return = TRUE, decreasing = TRUE)$ix[1:n.keep]
-idx <- s[1:101]
-chr.odd.even[idx] <- 2
-chr.odd.even <- chr.odd.even[sort(s)]
-
-df <- data.frame(position = 1:n.keep,
-                 stat = stat[sort(s)], 
-                 chr = chr.odd.even)
-
-df %>% 
-  ggplot(aes(x = position, y = stat, color = as.factor(chr))) +
-  geom_point() +
-  scale_color_manual(values = c("grey", "black", "red")) +
-  guides(colour = FALSE) +
-  ylab("Communalité") +
-  annotate("text",
-           x = c(5558, 16920, 35642),
-           y = c(0.27, 0.1, 0.1),
-           label = c("LCT", "HLA", "HERC2"),
-           size = 3,
-           colour = "black") +
-  theme_bw() +
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank())
-```
-
-???
-Manhattan plot
-
-Signaux d'adaptation biologique connus 
-
-Décrire LCT, HLA, HERC2
-
-
----
-<div id="rsn">
-  <p>28/45</p>
-</div>
-
-## Limites
+### Limites
 
 - Nombre de SNPs : 4542
 
@@ -2561,10 +1733,10 @@ df %>%
 
 ---
 <div id="rsn">
-  <p>28/45</p>
+  <p>19/45</p>
 </div>
 
-## Limites
+### Limites
 
 - Nombre de SNPs : 4542
 
@@ -2625,12 +1797,16 @@ class: bottom, coupure
 # Une nouvelle statistique de test
 
 <div id="rsn">
-  <p>29/45</p>
+  <p>20/45</p>
 </div>
 
 
 ---
-## Méthode
+<div id="rsn">
+  <p>21/45</p>
+</div>
+
+### Méthode
 
 - Décomposition en valeurs singulières 
 
@@ -2658,10 +1834,10 @@ où $S$ est un estimateur de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq
 
 ---
 <div id="rsn">
-  <p>30/45</p>
+  <p>21/45</p>
 </div>
 
-## Méthode
+### Méthode
 
 - Décomposition en valeurs singulières 
 
@@ -2681,31 +1857,21 @@ $$D_i^2 = (z_i - \bar{z})^T S^{-1} (z_i - \bar{z})$$
 
 où $S$ est un estimateur **robuste** de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq p}$
 
----
-<div id="rsn">
-  <p>31/45</p>
-</div>
+???
 
-
-## Classique VS Robuste
-
-<br>
-
-> « Another important unsupervised task is *anomaly detection* - for example, detecting unusual
+Another important unsupervised task is anomaly detection - for example, detecting unusual
 credit card transactions to prevent fraud, catching manufacturing defects, or automatically
 removing outliers from a dataset before feeding it to another learning algorithm. The system
 is trained with normal instances, and when it sees a new instance it can tell whether it looks
-like a normal one or whether it is likely an anomaly. »
->
-> Hands-On Machine Learning with Scikit-Learn & TensorFlow
+like a normal one or whether it is likely an anomaly. Hands-On Machine Learning with Scikit-Learn & TensorFlow
 
 
 ---
 <div id="rsn">
-  <p>31/45</p>
+  <p>22/45</p>
 </div>
 
-## Classique VS Robuste
+### Classique VS Robuste
 
 ```{r, include = FALSE}
 dt <- readRDS("data/div.rds")
@@ -2789,6 +1955,7 @@ df.isl <- rbind(df.data, df.out, df.1, df.2, df.3)
 df.isl$model <- "Modèle en îles"
 ```
 
+
 ```{r}
 rbind(df.div, df.isl) %>%
 ggplot(aes(x = x.coord, y = y.coord)) +
@@ -2812,15 +1979,17 @@ ggplot(aes(x = x.coord, y = y.coord)) +
         legend.key.width = unit(3, "line"),
         legend.position = c(0.175, 0.85),
         legend.background = element_rect(fill = alpha("white", 0)),
-        legend.key = element_rect(fill = alpha("white", 0)))
+        legend.key = element_rect(fill = alpha("white", 0)),
+        axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
+        axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
 ```
 
 ---
 <div id="rsn">
-  <p>32/45</p>
+  <p>23/45</p>
 </div>
 
-## Communalité VS Mahalanobis
+### Communalité VS Mahalanobis
 
 - Nombre de SNPs : 4542
 
@@ -2879,10 +2048,10 @@ df %>%
 
 ---
 <div id="rsn">
-  <p>33/45</p>
+  <p>24/45</p>
 </div>
 
-## `pcadapt` VS `pcadapt`
+### `pcadapt` VS `pcadapt`
 
 ```{r}
 hc.df <- data.frame(power = c(0.291, 0.319, 0.316,
@@ -2916,10 +2085,10 @@ highcharter::hchart(hc.df,
 
 ---
 <div id="rsn">
-  <p>34/45</p>
+  <p>25/45</p>
 </div>
 
-## `pcadapt` & Cie
+### `pcadapt` & Cie
 
 .pull-left[
 ```{r}
@@ -2984,10 +2153,10 @@ highcharter::hchart(hc.df,
 
 ---
 <div id="rsn">
-  <p>34/45</p>
+  <p>26/45</p>
 </div>
 
-## `pcadapt` & Cie
+### `pcadapt` & Cie
 
 .pull-left[
 ```{r}
@@ -3030,41 +2199,45 @@ Parler de la ressemblance entre FLK et pcadapt
 
 
 ---
-## Temps de calcul
+<div id="rsn">
+  <p>27/45</p>
+</div>
+
+### Temps de calcul
 
 ```{r}
 df.runtime <- readRDS("data/runtime-molecol.rds") %>%
   filter(Software != "SNMF") %>%
-  mutate(Temps = log10(Runtime + 1), Logiciel = Software) %>%
-  ggplot(aes(x = nSNP,
-             y = Runtime,
-             colour = Logiciel)) +
-  scale_y_continuous(breaks = 0:3, labels = c(0, 10, 100, 1000)) +
-  scale_color_manual(values = cbbPalette[c(2, 4, 3, 8)]) +
-  guides(colour = guide_legend(nrow = 1)) +
-  geom_point(size = 5) +
-  geom_line(size = 2) +
-  ylab("Temps (secondes)") +
-  xlab("Nombre de SNPs") +
-  theme_bw() +
-  theme(legend.position = "bottom",
-        legend.direction = "vertical",
-        legend.title.align = 0.5,
-        legend.text = element_text(face = "italic"),
-        legend.key.width = unit(5, "line"))
+  mutate(Temps = log10(Runtime + 1), Logiciel = Software) # %>%
+  # ggplot(aes(x = nSNP,
+  #            y = Runtime,
+  #            colour = Logiciel)) +
+  # scale_y_continuous(breaks = 0:3, labels = c(0, 10, 100, 1000)) +
+  # scale_color_manual(values = cbbPalette[c(2, 4, 3, 8)]) +
+  # guides(colour = guide_legend(nrow = 1)) +
+  # geom_point(size = 5) +
+  # geom_line(size = 2) +
+  # ylab("Temps (secondes)") +
+  # xlab("Nombre de SNPs") +
+  # theme_bw() +
+  # theme(legend.position = "bottom",
+  #       legend.direction = "vertical",
+  #       legend.title.align = 0.5,
+  #       legend.text = element_text(face = "italic"),
+  #       legend.key.width = unit(5, "line"))
 
-# thm <- hc_theme(
-#   colors = cbbPalette[c(2, 4, 3)],
-#   chart = list(
-#     backgroundColor = NULL
-#     )
-# )
+thm <- hc_theme(
+  colors = cbbPalette[c(2, 4, 3)],
+  chart = list(
+    backgroundColor = NULL
+    )
+)
 
 
-# df.runtime %>% 
-#   hchart("line", hcaes(x = nSNP, y = Temps, group = Logiciel)) %>%
-#   hc_add_theme(thm) %>%
-#   hc_title(text = "Comparaison des temps de calcul")
+df.runtime %>%
+  hchart("line", hcaes(x = nSNP, y = Temps, group = Logiciel)) %>%
+  hc_add_theme(thm) %>%
+  hc_title(text = "Comparaison des temps de calcul")
 ```
 
 
@@ -3072,18 +2245,53 @@ df.runtime <- readRDS("data/runtime-molecol.rds") %>%
 ---
 background-image: url("figure/mort_aux_rats.jpg")
 background-size: cover
-<!-- class: bottom coupure -->
+class: bottom coupure
 
 # Introgression adaptative
 
 <div id="rsn">
-  <p>35/45</p>
+  <p>28/45</p>
 </div>
 
 
 ---
-## Scénarios d'introgression
+background-image: url("figure/tibet.jpg")
+background-size: cover
 
+<div id="rectangle"> 
+
+  <p><ul> Standing variation, de novo mutations or adaptive introgression ? </ul></p>
+  
+  <center><img src="figure/tibetan_fst.png"/></center>
+  <center><p> (Xu et al., 2010) </p></center>
+</div>
+
+<div id="rsn">
+  <p>29/45</p>
+</div>
+
+---
+background-image: url("figure/tibet.jpg")
+background-size: cover
+
+<div id="rectangle"> 
+
+  <p><ul> Standing variation, de novo mutations or adaptive introgression ? </ul></p>
+  
+  <center><img src="figure/tibetan_introgression.png"/></center>
+  <center><p> (Hu et al., 2017) </p></center>
+</div>
+
+<div id="rsn">
+  <p>29/45</p>
+</div>
+
+---
+<div id="rsn">
+  <p>30/45</p>
+</div>
+
+### Scénarios d'introgression
 
 .pull-left[
   #### <center> Métissage
@@ -3138,18 +2346,32 @@ data.frame(method = method,
 
 
 ---
-## Coefficients de métissage et ACP
+<div id="rsn">
+  <p>31/45</p>
+</div>
 
-<center><img src="figure/mcvean.png" width="340" height="450"/></center>
+### Coefficients de métissage et ACP
+
+#### <center> (McVean, 2009)
+
+<center><img src="figure/mcvean.png" height="450"/></center>
 
 
 ---
-## Scores locaux
+<div id="rsn">
+  <p>32/45</p>
+</div>
 
-<center><img src="figure/pca.png" width="540" height="450"/></center>
+### Scores locaux
+
+<center><img src="figure/pca.png" height="550"/></center>
 
 ---
-## Méthode
+<div id="rsn">
+  <p>33/45</p>
+</div>
+
+### Méthode
 
 
 - Décomposition en valeurs singulières de $\tilde{G}$
@@ -3178,7 +2400,11 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 
 
 ---
-## Analyse de *Populus*
+<div id="rsn">
+  <p>34/45</p>
+</div>
+
+### Analyse de *Populus*
 
 #### <center> Chromosome 6 
 
@@ -3186,7 +2412,11 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 
 
 ---
-## Analyse de *Populus*
+<div id="rsn">
+  <p>35/45</p>
+</div>
+
+### Analyse de *Populus*
 
 #### <center> Chromosome 12
 
@@ -3194,7 +2424,11 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 
 
 ---
-## Simulations
+<div id="rsn">
+  <p>36/45</p>
+</div>
+
+### Simulations
 
 #### <center> Métissage
 
@@ -3202,28 +2436,128 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 
 
 ---
-## Simulations
+<div id="rsn">
+  <p>37/45</p>
+</div>
+
+### Simulations
 
 #### <center> Introgression
 
 ![](figure/power_f_introgression.png)
 
 
-
-
-
 ---
-class: bottom coupure
+background-image: url("figure/Rlogo.png")
+background-size: cover
+class: coupure bottom
 
 # La librairie `pcadapt`
 
+<div id="rsn">
+  <p>38/45</p>
+</div>
 
 ---
-## Interface Shiny
+<div id="rsn">
+  <p>39/45</p>
+</div>
+
+### SVD et valeurs manquantes
+
+- Fonction `svds` de la librairie `RSpectra` (IRAM)
+
+```{r, warning=FALSE}
+nIND <- c(25, 50, 100, 250, 500, 1000)
+nSNP <- 10000
+df <- data.frame(Method = c(rep("classic", length(nIND)),
+                            rep("iram", length(nIND))),
+                 nIND = nIND,
+                 Time = 0)
+
+for (i in 1:length(nIND)) {
+  m <- matrix(runif(nIND[i] * nSNP), nrow = nIND[i])
+  m <- scale(m)
+  x <- microbenchmark::microbenchmark(
+    RSpectra::svds(m %*% t(m), k = 2),
+    RSpectra::svds(m, k = 2),
+    times = 1,
+    control = list(order = "inorder")
+  )
+  df$Time[df$Method == "classic" & df$nIND == nIND[i]] <- x$time[1] * 1e-9
+  df$Time[df$Method == "iram" & df$nIND == nIND[i]] <- x$time[2] * 1e-9
+}
+
+df %>% 
+  ggplot(aes(x = nIND, y = Time, color = Method)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  xlab("Nombre d'observations") +
+  ylab("Temps (en secondes)") +
+  scale_color_manual(name = "",
+                     labels = c("Classique", "IRAM"),
+                     values = c("#E69F00", "#0072B2")) +
+  theme_bw() +
+  theme(legend.position = c(0.1, 0.9))
+  
+```
+
+
+---
+<div id="rsn">
+  <p>40/45</p>
+</div>
+
+### SVD et valeurs manquantes
+
+
+- Fonction `svds` de la librairie `RSpectra` (IRAM)
+
+- `Atrans`: Only used when A is a function. A is a function that calculates the matrix multiplication `A * x`, and `Atrans` is a function that calculates the transpose multiplication `A' * x`.
+
+--
+
+- $\left(\frac{1}{n}\tilde{G}^Tx\right)_j = \frac{1}{n} \sum_{i = 1}^n \tilde{G}_{ij} x_i$
+
+- $\left(\frac{1}{p}\tilde{G}y\right)_i = \frac{1}{p} \sum_{j = 1}^p \tilde{G}_{ij} y_j$
+
+---
+<div id="rsn">
+  <p>40/45</p>
+</div>
+
+### SVD et valeurs manquantes
+
+
+- Fonction `svds` de la librairie `RSpectra` (IRAM)
+
+- `Atrans`: Only used when A is a function. A is a function that calculates the matrix multiplication `A * x`, and `Atrans` is a function that calculates the transpose multiplication `A' * x`.
+
+
+- $\left(\frac{1}{n}\tilde{G}^Tx\right)_j = \frac{1}{\sum_{i=1}^n \delta_{ij}} \sum_{i = 1}^n \tilde{G}_{ij} \delta_{ij} x_i$
+
+- $\left(\frac{1}{p}\tilde{G}y\right)_i = \frac{1}{\sum_{j=1}^p \delta_{ij}} \sum_{j = 1}^p \tilde{G}_{ij} \delta_{ij} y_j$
+
+
+---
+<div id="rsn">
+  <p>41/45</p>
+</div>
+
+### SVD et valeurs manquantes
+
+![](figure/missing-values-comparison-1.png)
+
+---
+<div id="rsn">
+  <p>41/45</p>
+</div>
+
+### Interface Shiny
 
 
 ```{r, eval = TRUE}
-knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt")
+knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt", height = 500)
 ```
 
 
@@ -3232,8 +2566,4 @@ knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt")
 ```{r}
 knitr::include_url("https://keurcien.github.io/book/details.html#rapport-entre-la-communalite-et-lindice-de-fixation", height = "600px")
 ```
-
-
-
-
 
