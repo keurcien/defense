@@ -78,7 +78,7 @@ class: coupure bottom
 
 .right-column[
 
-> « Il est bon de rappeler que ce qui nous rend semblables est plus important que ce qui nous rend différents. Les milliards d'êtres humains éparpillés sur toute la planète se différencient par la couleur de la peau et par la forme du corps, par la langue et par la culture. Et cette variété, qui témoigne de notre capacité à changer, à nous adapter à des milieux différents et à y développer des modes de vie originaux, est la meilleure garantie pour l'avenir de l'espèce humaine. Les connaissances que nous avons acquises sur nous-mêmes montrent cependant que toute cette diversité, comme la surface changeante des océans ou de la voûte du ciel, est bien peu de chose par rapport à cet immense patrimoine que nous avons en commun, nous, les humains. »
+> « Il est bon de rappeler que ce qui nous rend semblables est plus important que ce qui nous rend différents. Les milliards d'êtres humains éparpillés sur toute la planète se différencient par la couleur de la peau et par la forme du corps, par la langue et par la culture. Et cette variété, qui témoigne de notre capacité à changer, à nous adapter à des milieux différents et à y développer des modes de vie originaux, est la meilleure garantie pour l'avenir de l'espèce humaine. »
 >
 > L. Cavalli-Sforza (1994)
 
@@ -96,6 +96,35 @@ Phrase canon pour deux raisons :
 Mots importants : différencient, variété, capacité à changer, adapter à des milieux différents, garantie pour l'avenir de l'espèce
 
 Si cette citation vous semble claire, on peut quasiment passer à la partie suivante 
+
+
+
+---
+
+<div id="rsn">
+  <p>2/45</p>
+</div>
+
+
+### La génétique des populations
+
+.left-column[
+
+<br>
+
+<br>
+
+![](figure/cavalli_sforza.jpg)
+
+]
+
+.right-column[
+
+> « Il est bon de rappeler que ce qui nous rend semblables est plus important que ce qui nous rend différents. Les milliards d'êtres humains éparpillés sur toute la planète se **différencient** par la couleur de la peau et par la forme du corps, par la langue et par la culture. Et cette **variété**, qui témoigne de notre **capacité à changer**, à nous **adapter à des milieux différents** et à y développer des modes de vie originaux, est la **meilleure garantie pour l'avenir de l'espèce** humaine. »
+>
+> L. Cavalli-Sforza (1994)
+
+]
 
 
 ---
@@ -137,224 +166,13 @@ background-size: cover
   <p>3/45</p>
 </div>
 
----
-<div id="rsn">
-  <p>4/45</p>
-</div>
-
-### Données génomiques
-
-#### <center> Évolution des coûts de séquençage depuis 2001 (Wetterstrand, 2013) </center>
-
-```{r}
-df <- read.csv("data/seqcost2015_4.csv")
-df %>%
-  mutate(log10CpG = log10(Cost.per.Genome)) %>%
-  ggplot(aes(x = as.Date(Date), y = log10CpG)) +
-  geom_line(color = cbbPalette[6], size = 1.5) +
-  scale_y_continuous(breaks = 1:8,
-                     labels = c("10",
-                                "100",
-                                "1K",
-                                "10K",
-                                "100K",
-                                "1M",
-                                "10M",
-                                "100M")) +
-  xlab("Année") +
-  ylab("Coût par génôme (en dollars)") +
-  scale_x_date(date_minor_breaks = "1 year") +
-  theme_bw() +
-  theme(text = element_text(size = 15))
-
-```
-
----
-<div id="rsn">
-  <p>5/45</p>
-</div>
-
-### Polymorphisme d'un seul nucléotide (SNP)
-
-
-```{r}
-set.seed(5)
-
-N <- 20
-nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
-nuclB1 <- nuclA1
-nuclC1 <- nuclA1
-nuclD1 <- nuclA1
-
-tA <- rep("DNA1", N)
-tB <- rep("DNA2", N)
-tC <- rep("DNA3", N)
-tD <- rep("DNA4", N)
-
-SNPA.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(1, N), 
-                      y2 = rep(2, N), 
-                      t = tA,
-                      r = nuclA1,
-                      marker.type = "SNP")
-
-SNPB.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(3, N), 
-                      y2 = rep(4, N), 
-                      t = tB,
-                      r = nuclB1,
-                      marker.type = "SNP")
-
-SNPC.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(5, N), 
-                      y2 = rep(6, N), 
-                      t = tC,
-                      r = nuclC1,
-                      marker.type = "SNP")
-
-SNPD.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(7, N), 
-                      y2 = rep(8, N), 
-                      t = tD,
-                      r = nuclD1,
-                      marker.type = "SNP")
-
-rbind(SNPA.df, SNPB.df, SNPC.df, SNPD.df) %>%
-  mutate(t = factor(t,
-                    levels = c("DNA1",
-                               "DNA2",
-                               "DNA3",
-                               "DNA4"),
-                    ordered = TRUE)) %>%
-  ggplot() +
-  coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 3, 6, 6)]) +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = t),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = r),
-            size = 4) +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank())
-
-```
-
-
-
----
-<div id="rsn">
-  <p>5/45</p>
-</div>
-
-### Polymorphisme d'un seul nucléotide (SNP)
-
-```{r}
-set.seed(5)
-
-idx.SNP <- sample(1:N, size = 1)
-if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
-  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
-} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
-  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
-}
-
-tA[idx.SNP] <- "X"
-tB[idx.SNP] <- "X"
-tC[idx.SNP] <- "X"
-tD[idx.SNP] <- "X"
-
-SNPA.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(1, N), 
-                      y2 = rep(2, N), 
-                      t = tA,
-                      r = nuclA1,
-                      marker.type = "SNP")
-
-SNPB.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(3, N), 
-                      y2 = rep(4, N), 
-                      t = tB,
-                      r = nuclB1,
-                      marker.type = "SNP")
-
-SNPC.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(5, N), 
-                      y2 = rep(6, N), 
-                      t = tC,
-                      r = nuclC1,
-                      marker.type = "SNP")
-
-SNPD.df <- data.frame(x1 = 1:N,
-                      x2 = 2:(N + 1),
-                      y1 = rep(7, N), 
-                      y2 = rep(8, N), 
-                      t = tD,
-                      r = nuclD1,
-                      marker.type = "SNP")
-
-rbind(SNPA.df, SNPB.df, SNPC.df, SNPD.df) %>%
-  mutate(t = factor(t,
-                    levels = c("DNA1",
-                               "DNA2",
-                               "DNA3",
-                               "DNA4",
-                               "X"),
-                    ordered = TRUE)) %>%
-  ggplot() +
-  coord_fixed() +
-  scale_fill_manual(values = cbbPalette[c(3, 3, 6, 6, 7)]) +
-  geom_rect(mapping = aes(xmin = x1,
-                          xmax = x2,
-                          ymin = y1,
-                          ymax = y2,
-                          fill = t),
-            color = "black",
-            alpha = 0.75) +
-  geom_text(aes(x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 2,
-                label = r),
-            size = 4) +
-  theme_bw() +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.border = element_blank(),
-        panel.grid = element_blank())
-
-```
-
 
 ---
 <div id="rsn">
   <p>6/45</p>
 </div>
 
-### Des chiffres et des lettres
+### Données d'entrée
 
 .pull-left[
 
@@ -474,7 +292,7 @@ print(p3)
   <p>6/45</p>
 </div>
 
-### Des chiffres et des lettres
+### Données d'entrée
 
 .pull-left[
 
@@ -525,7 +343,7 @@ print(p3)
 ]
 
 ---
-background-image: url("figure/arabidopsis.jpg")
+background-image: url("figure/tibet.jpg")
 background-size: cover
 class: bottom coupure 
 
@@ -547,7 +365,7 @@ Allèle alternatif : C
 
 .pull-left[
 #### <center> Population 1
-<center><img src="figure/fst_5.png" width="450" height="300"/></center>
+<center><img src="figure/fst_5.png" height="300"/></center>
 
 $$p_1 = 26/45 \simeq 0.58$$
 
@@ -591,9 +409,12 @@ $$\bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$$
 
 --
 
-#### Exemple de scan à $F_{ST}$ (Xu et al., 2010)
+#### Test de Lewontin-Krakauer
 
-<center><img src="figure/tibetan_fst.png" height = "250"/></center>
+$$T_{LK} = \frac{N-1}{\bar{F}_{ST}} F_{ST}$$
+
+`r emojifont::emoji('arrow_right')` $T_{LK}$ suit une loi du $\chi^2$ à $N-1$ degrés de liberté
+
 
 ???
 
@@ -603,36 +424,7 @@ par la suite en guise de comparaison.
 
 L'heuristique de cette statistique est très simple, si une des N populations affiche une fréquence très différente de la fréquence moyenne, alors il y a de grandes chances que ce SNP soit fortement associé avec la différenciation de cette population, relativement aux autres.
 
-
----
-<div id="rsn">
-  <p>8/45</p>
-</div>
-
-### L'indice de fixation
-
-
-#### Définition (Wright, 1943)
-
-.pull-left[
-
-$$F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_k - \bar{p})^2}{\bar{p}(1 - \bar{p})}$$
-]
-
-.pull-right[
-$$\bar{p} = \frac{1}{N}\sum_{k = 1}^N p_k$$
-]
-
-
-
-#### Test de Lewontin-Krakauer
-
-$$T_{LK} = \frac{N-1}{\bar{F}_{ST}} F_{ST}$$
-
-$T_{LK}$ suit une loi du $\chi^2$ à $N-1$ degrés de liberté
-
-??? 
-
+ 
 On n'a pas toujours un Manhattan plot aussi joli où des pics évidents ressortent
 
 
@@ -641,7 +433,7 @@ On n'a pas toujours un Manhattan plot aussi joli où des pics évidents ressorte
   <p>9/45</p>
 </div>
 
-### Modèles démographiques
+### Modèles démographiques et limites de l'indice de fixation
 
 ```{r}
 circleFun <- function(center = c(0, 0),
@@ -829,12 +621,14 @@ Dans le cas d'un modèle en île que l'on a ici, le fait qu'il y ait des mouveme
 
 Dans le cas d'un modèle de divergence, on a une population ancestrale qui va connaître un épisode de divergence et donc donner naissance à deux sous-populations, puis une des sous-populations va elle-même subir un autre épisode de divergence. Un peu à la manière de ce que l'on peut voir en phylogénie, les populations P2 et P3 ici vont être plus apparentées entre elles que par rapport à P1. 
 
+Les conséquences directes sur la FST sont 
+
 ---
 <div id="rsn">
   <p>9/45</p>
 </div>
 
-### Modèles démographiques
+### Modèles démographiques et limites de l'indice de fixation
 
 ```{r}
 df.crossNWSE <- data.frame(x1 = -1.5, x2 = 3.5, y1 = 2.5, y2 = -1.5)
@@ -1031,45 +825,6 @@ class: bottom coupure
 </div>
 
 
----
-<div id="rsn">
-  <p>11/45</p>
-</div>
-
-### L'ACP en génétique des populations
-
-.pull-left[
-
-- Normalisation de la matrice de génotypes
-
-$$\tilde{G}_{.,j} = \frac{G_{.,j} - 2 p_j}{\sqrt{2p_j(1-p_j)}}$$
-
-- Calcul de la matrice d'apparentement génétique
-
-$$G_{RM} = \frac{1}{p}\tilde{G} \tilde{G}^T$$
-
-
-- Diagonalisation de $G_{RM}$
-
-
-$$G_{RM} = U \Sigma^2 U^T$$
-
-où $\Sigma \in M_n(\mathbb{R})$ et $U \in M_n(\mathbb{R})$.  
-]
-
-.pull-right[
-
-```{r, echo = TRUE, eval = FALSE}
-p<-apply(G,MARGIN=2,mean)/2  
-s<-sqrt(2*p*(1-p))
-G.tilde<-scale(G, 
-               center=T, 
-               scale=s)
-```
-
-
-
-]
 
 
 ---
@@ -1343,12 +1098,11 @@ Reflète la structure géographique
 
 <br>
 
-- L'information contenue dans les génotypes permet de regrouper les individus dans
-des clusters de façon non supervisée.
+- L'information contenue dans les génotypes permet de **regrouper les individus dans des clusters de façon non supervisée**.
 
 - Ces clusters correspondent aux populations auxquelles ces individus appartiennent. 
 
-- Comment cela peut-il nous permettre de détecter des locus sous sélection `r emojifont::emoji('question')`
+- Comment cela peut-il nous permettre de **détecter des locus sous sélection** `r emojifont::emoji('question')`
 
 
 ]
@@ -1477,7 +1231,7 @@ Décrire LCT, HLA, HERC2
   <p>17/45</p>
 </div>
 
-### Lien avec l'indice de fixation
+### Lien entre la communalité et l'indice de fixation
 
 ```{r, include = FALSE}
 G <- readRDS("data/isl.rds")
@@ -1537,7 +1291,7 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
   <p>17/45</p>
 </div>
 
-### Lien avec l'indice de fixation
+### Lien entre la communalité et l'indice de fixation
 
 .pull-left[
 
@@ -1585,7 +1339,7 @@ F_{ST} = \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 -
   <p>17/45</p>
 </div>
 
-### Lien avec l'indice de fixation
+### Lien entre la communalité et l'indice de fixation
 
 .pull-left[
 
@@ -1634,7 +1388,7 @@ F_{ST} &= \frac{\frac{1}{N-1}\sum_{k = 1}^N (p_{ki} - \bar{p_i})^2}{\bar{p_i}(1 
   <p>18/45</p>
 </div>
 
-### Lien avec l'indice de fixation
+### Lien entre la communalité et l'indice de fixation
 
 .pull-left[
 
@@ -1669,7 +1423,9 @@ Généralisation de l'indice de fixation au cas de populations continues.
   <p>19/45</p>
 </div>
 
-### Limites
+### Limites de l'indice de fixation et de la communalité
+
+#### Data challenge SSMPG 2015
 
 - Nombre de SNPs : 4542
 
@@ -1736,7 +1492,9 @@ df %>%
   <p>19/45</p>
 </div>
 
-### Limites
+### Limites de l'indice de fixation et de la communalité
+
+#### Data challenge SSMPG 2015
 
 - Nombre de SNPs : 4542
 
@@ -1806,7 +1564,7 @@ class: bottom, coupure
   <p>21/45</p>
 </div>
 
-### Méthode
+### Méthode pour l'adaptation locale
 
 - Décomposition en valeurs singulières 
 
@@ -1837,7 +1595,7 @@ où $S$ est un estimateur de $\left(\text{cov}(z_i, z_j)\right)_{1 \leq i,j \leq
   <p>21/45</p>
 </div>
 
-### Méthode
+### Méthode pour l'adaptation locale 
 
 - Décomposition en valeurs singulières 
 
@@ -1871,7 +1629,7 @@ like a normal one or whether it is likely an anomaly. Hands-On Machine Learning 
   <p>22/45</p>
 </div>
 
-### Classique VS Robuste
+### Intérêt de l'estimation robuste
 
 ```{r, include = FALSE}
 dt <- readRDS("data/div.rds")
@@ -1989,7 +1747,9 @@ ggplot(aes(x = x.coord, y = y.coord)) +
   <p>23/45</p>
 </div>
 
-### Communalité VS Mahalanobis
+### Comparaison de la distance de Mahalanobis et de la communalité
+
+#### Data challenge SSMPG 2015
 
 - Nombre de SNPs : 4542
 
@@ -2051,7 +1811,7 @@ df %>%
   <p>24/45</p>
 </div>
 
-### `pcadapt` VS `pcadapt`
+### Évaluation des méthodes implémentées dans `pcadapt`
 
 ```{r}
 hc.df <- data.frame(power = c(0.291, 0.319, 0.316,
@@ -2085,84 +1845,65 @@ highcharter::hchart(hc.df,
 
 ---
 <div id="rsn">
-  <p>25/45</p>
-</div>
-
-### `pcadapt` & Cie
-
-.pull-left[
-```{r}
-hc.df <- readRDS("data/isldivrexp.rds") %>%
-  filter(model == "div", software != "SNMF") %>%
-  mutate(model = NULL)
-
-colnames(hc.df) <- c("Logiciel", "Puissance", "Type")
-
-type.fr <- as.character(hc.df$Type)
-type.fr[type.fr == "No admixture"] <- "Sans métissage"
-type.fr[type.fr == "With admixture"] <- "Avec métissage"
-hc.df$Type <- as.factor(type.fr)
-
-thm <- hc_theme(
-  colors = c("#56B4E9", "#0072B2"),
-  chart = list(
-    backgroundColor = NULL
-    )
-)
-
-highcharter::hchart(hc.df, 
-                    "column", 
-                    hcaes(x = Logiciel, y = Puissance, group = Type)) %>%
-  hc_add_theme(thm) %>%
-  hc_title(text = "Modèle de divergence")
-  
-```
-]
-
-
-.pull-right[
-```{r}
-hc.df <- readRDS("data/isldivrexp.rds") %>%
-  filter(model == "isl", software != "SNMF") %>%
-  mutate(model = NULL)
-
-colnames(hc.df) <- c("Logiciel", "Puissance", "Type")
-
-type.fr <- as.character(hc.df$Type)
-type.fr[type.fr == "No admixture"] <- "Sans métissage"
-type.fr[type.fr == "With admixture"] <- "Avec métissage"
-hc.df$Type <- as.factor(type.fr)
-
-thm <- hc_theme(
-  colors = c("#56B4E9", "#0072B2"),
-  chart = list(
-    backgroundColor = NULL
-    )
-)
-
-highcharter::hchart(hc.df, 
-                    "column", 
-                    hcaes(x = Logiciel, y = Puissance, group = Type)) %>%
-  hc_add_theme(thm) %>%
-  hc_title(text = "Modèle en îles")
-  
-```
-]
-
-
-
----
-<div id="rsn">
   <p>26/45</p>
 </div>
 
-### `pcadapt` & Cie
+### Comparaison des logiciels
+
+#### <center> Modèle en îles
 
 .pull-left[
 ```{r}
 df <- readRDS("data/curves-fdrpower.rds") %>%
   mutate(Puissance = power, Logiciel = software, FDR = fdr) %>%
   filter(model %in% c("isl", "islh"), software != "SNMF") %>%
+  droplevels()
+levels(df$model) <- c("Sans métissage", "Avec métissage")
+
+thm <- hc_theme(
+  colors = cbbPalette[c(7, 2, 4, 3)],
+  chart = list(
+    backgroundColor = NULL
+    )
+)
+
+
+df %>% 
+  filter(model == "Sans métissage") %>%
+  hchart("line", hcaes(x = FDR, y = Puissance, group = Logiciel)) %>%
+  hc_add_theme(thm) %>%
+  hc_title(text = "Sans métissage")
+```
+]
+
+.pull-right[
+```{r}
+df %>% 
+  filter(model == "Avec métissage") %>%
+  hchart("line", hcaes(x = FDR, y = Puissance, group = Logiciel)) %>%
+  hc_add_theme(thm) %>%
+  hc_title(text = "Avec métissage")
+```
+]
+
+???
+
+Parler de la ressemblance entre FLK et pcadapt
+
+---
+<div id="rsn">
+  <p>26/45</p>
+</div>
+
+### Comparaison des logiciels
+
+#### <center> Modèle de divergence
+
+.pull-left[
+```{r}
+df <- readRDS("data/curves-fdrpower.rds") %>%
+  mutate(Puissance = power, Logiciel = software, FDR = fdr) %>%
+  filter(model %in% c("div", "divh"), software != "SNMF") %>%
   droplevels()
 levels(df$model) <- c("Sans métissage", "Avec métissage")
 
@@ -2196,6 +1937,8 @@ df %>%
 ???
 
 Parler de la ressemblance entre FLK et pcadapt
+
+
 
 
 ---
@@ -2371,23 +2114,13 @@ data.frame(method = method,
   <p>33/45</p>
 </div>
 
-### Méthode
+### Méthode pour l'introgression
 
 
 - Décomposition en valeurs singulières de $\tilde{G}$
 
 
 $$\tilde{G} \simeq U \Sigma V^T$$
-
-- $B$ barycentre des individus d'une population receveuse
-
-- $B_1$ et $B_2$ barycentres des individus des populations donneuses
-
---
-
-- Calcul des coordonnées barycentriques de $B$ dans le repère $(B_1, B_2)$
-
-$$B = q_1 B_1 + q_2 B_2$$
 --
 
 - Calcul des scores locaux sur une fenêtre de SNPs $W$ 
@@ -2396,7 +2129,60 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 
 --
 
-- Calcul des proportions de métissage local pour chaque SNP à partir de $U_W$
+- $B$ barycentre des coordonnées $U_W$ des individus d'une population receveuse
+
+- $B_1$, $B_2$, $\dots$, $B_K$ barycentres des coordonnées $U_W$ des individus des populations donneuses
+
+--
+
+- Calcul des coordonnées barycentriques de $B$ dans le repère $(B_1, \dots, B_K)$
+
+$$B = q_1 B_1 + \dots + q_K B_K$$
+
+
+
+
+
+
+---
+<div id="rsn">
+  <p>36/45</p>
+</div>
+
+### Simulations
+
+#### <center> Métissage
+
+![](figure/power_Dq.png)
+
+
+---
+<div id="rsn">
+  <p>37/45</p>
+</div>
+
+### Simulations
+
+#### <center> Introgression
+
+![](figure/power_f_introgression.png)
+
+---
+<div id="rsn">
+  <p>34/45</p>
+</div>
+
+### Analyse de *Populus*
+
+#### <center> (Suarez-Gonzalez, 2016)
+
+- Données de peupliers d'Amérique du Nord
+
+- Deux populations ancestrales : *Populus Trichocarpa* et *Populus Balsamifera*
+
+- Deux populations hybrides 
+
+- 3 chromosomes (6, 12 et 15)
 
 
 ---
@@ -2423,29 +2209,6 @@ $$U_{W} = \tilde{G}_{.,W}V_{W,.}\Sigma^{-1}$$
 ![](figure/Chr12_100kbp.png)
 
 
----
-<div id="rsn">
-  <p>36/45</p>
-</div>
-
-### Simulations
-
-#### <center> Métissage
-
-![](figure/power_Dq.png)
-
-
----
-<div id="rsn">
-  <p>37/45</p>
-</div>
-
-### Simulations
-
-#### <center> Introgression
-
-![](figure/power_f_introgression.png)
-
 
 ---
 background-image: url("figure/Rlogo.png")
@@ -2467,7 +2230,7 @@ class: coupure bottom
 
 - Fonction `svds` de la librairie `RSpectra` (IRAM)
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=FALSE}
 nIND <- c(25, 50, 100, 250, 500, 1000)
 nSNP <- 10000
 df <- data.frame(Method = c(rep("classic", length(nIND)),
@@ -2561,23 +2324,54 @@ knitr::include_url("https://keurcien.shinyapps.io/app-pcadapt", height = 500)
 ```
 
 
----
-
-```{r}
-knitr::include_url("https://keurcien.github.io/book/details.html#rapport-entre-la-communalite-et-lindice-de-fixation", height = "600px")
-```
-
 
 ---
 background-image: url("figure/perspective.jpg")
 background-size: cover
 class: coupure bottom
 
-### Perspectives et conclusions
+# Perspectives et conclusions
 
 <div id="rsn">
   <p>42/45</p>
 </div>
+
+---
+<div id="rsn">
+  <p>42/45</p>
+</div>
+
+### Récapitulatif
+
+#### Adaptation locale
+
+- Expression de l'indice de fixation en terme de communalité statistique
+
+- Généralisation de l'indice de fixation au cas de structures de populations continues
+
+- Développement d'une méthode basée sur la distance de Mahalanobis corrigeant les défauts de la communalité
+
+- Méthode utilisable pour des données en grande dimension
+
+- Mise à disposition d'une librairie `R` sur CRAN
+
+
+#### Introgression
+
+- Développement d'une méthode basée sur les génotypes adaptée aux différents scénarios d'introgression
+
+- Statistique permettant d'obtenir des résultats sur les simulations équivalents aux méthodes de l'état de l'art dans les deux cas
+
+- Permet de retrouver les mêmes signaux d'introgression sur les données de peupliers
+
+- Traitement des données manquantes non disponible pour le moment
+
+- Recherche d'un jeu de données réel correspondant au scénario à flux de gènes 
+
+
+
+
+
 
 ---
 <div id="rsn">
@@ -2588,7 +2382,7 @@ class: coupure bottom
 
 #### <center> (Lawson & Falush, 2012)
 
-![](figure/finestructure.png)
+<center><img src="figure/finestructure.png" height="450"/></center>
 
 ---
 <div id="rsn">
@@ -2599,3 +2393,11 @@ class: coupure bottom
 ### Utilisation de variables environnementales
 
 ![](figure/rda-pca-1.png)
+
+
+---
+
+```{r}
+knitr::include_url("https://keurcien.github.io/book/details.html#rapport-entre-la-communalite-et-lindice-de-fixation", height = "600px")
+```
+
